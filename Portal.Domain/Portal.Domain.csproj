@@ -43,8 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AggregatesModel\OrderAggregate\Currency.cs" />
-    <Compile Include="AggregatesModel\OrderAggregate\ICurrencyRepository.cs" />
+    <Compile Include="AggregatesModel\CurrencyAggregate\Currency.cs" />
+    <Compile Include="AggregatesModel\CurrencyAggregate\ICurrencyRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeedWork\Entity.cs" />
     <Compile Include="SeedWork\IAggregateRoot.cs" />

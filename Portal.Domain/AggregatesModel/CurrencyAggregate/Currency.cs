@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Portal.Domain.AggregatesModel.OrderAggregate
+namespace Portal.Domain.AggregatesModel.CurrencyAggregate
 {
     public class Currency
         : Entity, IAggregateRoot

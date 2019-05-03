@@ -1,7 +1,7 @@
 ﻿using Portal.Domain.Seedwork;
 using System.Threading.Tasks;
 
-namespace Portal.Domain.AggregatesModel.OrderAggregate
+namespace Portal.Domain.AggregatesModel.CurrencyAggregate
 {
     //This is just the RepositoryContracts or Interface defined at the Domain Layer
     //as requisite for the Currency Aggregate
