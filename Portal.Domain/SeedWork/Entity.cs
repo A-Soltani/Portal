@@ -1,25 +1,20 @@
-﻿namespace Portal.Domain.Seedwork
-{
-    using System;
-    using MediatR;
-    using System.Collections.Generic;
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
+namespace Portal.Domain.SeedWork
+{
     public abstract class Entity
     {
-        int? _requestedHashCode;
-        int _Id;        
-        public virtual  int Id 
-        {
-            get
-            {
-                return _Id;
-            }
-            protected set
-            {
-                _Id = value;
-            }
-        }
-
+        // DDD Patterns comment
+        // Use domain events to explicitly implement side effects of changes within your domain.
+        // In other words, Use domain events to explicitly implement side effects across multiple aggregates.
+        // A domain event is, something that happened in the domain that you want other parts of the same domain (in-process) to be aware of.
+        // An important benefit of domain events is that side effects can be expressed explicitly.
+        // It’s important to ensure that, just like a database transaction, either all the operations related to a domain event finish successfully or none of them do.
         private List<INotification> _domainEvents;
         public IReadOnlyCollection<INotification> DomainEvents => _domainEvents?.AsReadOnly();
 
@@ -39,54 +34,7 @@
             _domainEvents?.Clear();
         }
 
-        public bool IsTransient()
-        {
-            return this.Id == default(Int32);
-        }
 
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is Entity))
-                return false;
 
-            if (Object.ReferenceEquals(this, obj))
-                return true;
-
-            if (this.GetType() != obj.GetType())
-                return false;
-
-            Entity item = (Entity)obj;
-
-            if (item.IsTransient() || this.IsTransient())
-                return false;
-            else
-                return item.Id == this.Id;
-        }
-
-        public override int GetHashCode()
-        {
-            if (!IsTransient())
-            {
-                if (!_requestedHashCode.HasValue)
-                    _requestedHashCode = this.Id.GetHashCode() ^ 31; // XOR for random distribution (http://blogs.msdn.com/b/ericlippert/archive/2011/02/28/guidelines-and-rules-for-gethashcode.aspx)
-
-                return _requestedHashCode.Value;
-            }
-            else
-                return base.GetHashCode();
-
-        }
-        public static bool operator ==(Entity left, Entity right)
-        {
-            if (Object.Equals(left, null))
-                return (Object.Equals(right, null)) ? true : false;
-            else
-                return left.Equals(right);
-        }
-
-        public static bool operator !=(Entity left, Entity right)
-        {
-            return !(left == right);
-        }
     }
 }

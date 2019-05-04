@@ -1,13 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Portal.Domain.SeedWork
 {
+    // DDD Patterns comment
+    // There are two main characteristics for value objects:
+    // They have no identity.
+    // They are immutable.
     public abstract class ValueObject
     {
+        // DDD Patterns comment
+        // There must be any identity property for value objects.
+        // So defining equal operator is mandatory for checking equality of them. 
         protected static bool EqualOperator(ValueObject left, ValueObject right)
         {
-            if (ReferenceEquals(left, null) ^ ReferenceEquals(right, null))
+            if (left is null ^ ReferenceEquals(right, null))
             {
                 return false;
             }
@@ -20,7 +30,6 @@ namespace Portal.Domain.SeedWork
         }
 
         protected abstract IEnumerable<object> GetAtomicValues();
-
         public override bool Equals(object obj)
         {
             if (obj == null || obj.GetType() != GetType())
@@ -44,6 +53,7 @@ namespace Portal.Domain.SeedWork
             return !thisValues.MoveNext() && !otherValues.MoveNext();
         }
 
+        // This is needed for override Equals
         public override int GetHashCode()
         {
             return GetAtomicValues()
@@ -51,9 +61,5 @@ namespace Portal.Domain.SeedWork
              .Aggregate((x, y) => x ^ y);
         }
 
-        public ValueObject GetCopy()
-        {
-            return this.MemberwiseClone() as ValueObject;
-        }
     }
 }

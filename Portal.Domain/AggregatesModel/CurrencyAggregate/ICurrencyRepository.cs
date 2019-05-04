@@ -1,17 +1,26 @@
-﻿using Portal.Domain.Seedwork;
+﻿using Portal.Domain.SeedWork;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Portal.Domain.AggregatesModel.CurrencyAggregate
 {
-    //This is just the RepositoryContracts or Interface defined at the Domain Layer
-    //as requisite for the Currency Aggregate
-
+    // DDD Patterns comment
+    // This is just the RepositoryContracts or Interface defined at the Domain Layer
+    // as requisite for the Currency Aggregate
     public interface ICurrencyRepository : IRepository<Currency>
     {
         Currency Add(Currency currency);
-        
+
         void Update(Currency currency);
 
-        Task<Currency> GetAsync(int currencyId);
+        // Why there are different parameter types for CurrencyNumericCode?
+        //public BasketResult<bool> Delete(Int32 CurrencyNumericCode, int userId)
+        void DeleteByCurrencyNumericCode(short CurrencyNumericCode, int userId);
+
+        Task<List<Currency>> GetCurrencyAsync(Int16? CurrencyNumericCode);
+
     }
 }

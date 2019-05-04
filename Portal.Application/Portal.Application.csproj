@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F2D0DC7C-38D9-4374-AC5B-CF81D5872049}</ProjectGuid>
+    <ProjectGuid>{8EA3B4E5-E4B4-490D-BB2A-FADA6C1AC417}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Portal.Infrastructure</RootNamespace>
-    <AssemblyName>Portal.Infrastructure</AssemblyName>
+    <RootNamespace>Portal.Application</RootNamespace>
+    <AssemblyName>Portal.Application</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,7 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,13 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\IDataRecordExtensions.cs" />
-    <Compile Include="Extensions\IDbCommandExtensions.cs" />
+    <Compile Include="DTO\CurrencyDTO.cs" />
+    <Compile Include="ICurrencyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\AdoNetRepositories\AdoNetCurrencyRepository.cs" />
-    <Compile Include="Repositories\AdoNetRepositories\SeedWork\AdoNetContext.cs" />
-    <Compile Include="Repositories\AdoNetRepositories\SeedWork\AdoNetUnitOfWork.cs" />
-    <Compile Include="Repositories\AdoNetRepositories\SeedWork\DbConnectionFactory.cs" />
+    <Compile Include="Services\CurrencyServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Portal.Domain\Portal.Domain.csproj">

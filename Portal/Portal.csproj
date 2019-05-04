@@ -75,10 +75,33 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CurrenciesDefinition.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurrenciesDefinition.aspx.cs">
+      <DependentUpon>CurrenciesDefinition.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CurrenciesDefinition.aspx.designer.cs">
+      <DependentUpon>CurrenciesDefinition.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UtilityExtensions\ConvertExtension.cs" />
+    <Compile Include="Utility\Helper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Portal.Application\Portal.Application.csproj">
+      <Project>{8ea3b4e5-e4b4-490d-bb2a-fada6c1ac417}</Project>
+      <Name>Portal.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Portal.Domain\Portal.Domain.csproj">
+      <Project>{5d620ad9-c807-4cb4-81ad-30976f36cbc2}</Project>
+      <Name>Portal.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal", "Portal\Portal.csproj", "{366E18D6-D852-4190-9BB5-3BA048AAADF9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal.Infrastructure", "Portal.Infrastructure\Portal.Infrastructure.csproj", "{F2D0DC7C-38D9-4374-AC5B-CF81D5872049}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal.Domain", "Portal.Domain\Portal.Domain.csproj", "{5D620AD9-C807-4CB4-81AD-30976F36CBC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal.Application", "Portal.Application\Portal.Application.csproj", "{8EA3B4E5-E4B4-490D-BB2A-FADA6C1AC417}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{5D620AD9-C807-4CB4-81AD-30976F36CBC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D620AD9-C807-4CB4-81AD-30976F36CBC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D620AD9-C807-4CB4-81AD-30976F36CBC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EA3B4E5-E4B4-490D-BB2A-FADA6C1AC417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EA3B4E5-E4B4-490D-BB2A-FADA6C1AC417}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EA3B4E5-E4B4-490D-BB2A-FADA6C1AC417}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EA3B4E5-E4B4-490D-BB2A-FADA6C1AC417}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
