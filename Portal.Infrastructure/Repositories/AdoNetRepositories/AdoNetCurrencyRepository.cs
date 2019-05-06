@@ -11,31 +11,37 @@ using System.Threading.Tasks;
 
 namespace Portal.Infrastructure.Repositories
 {
-    class AdoNetCurrencyRepository : ICurrencyRepository
+    public class AdoNetCurrencyRepository : ICurrencyRepository
     {
         private readonly AdoNetContext _context;
 
         public IUnitOfWork UnitOfWork => throw new NotImplementedException();
+
+        public AdoNetCurrencyRepository()
+        {
+            _context = new AdoNetContext(new DbConnectionFactory("MyConString"));
+        }
 
         public Currency Add(Currency currency)
         {
             using (var command = _context.CreateCommand())
             {
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "SP_Currency_Insert";
-                // Be careful CreateParameter is a extension
+                command.CommandText = "MMCCurrencies_Insert";
+                // Be careful CreateParameter is an extension
                 command.Parameters.Add(command.CreateParameter("@IN_CurrencyNumericCode", currency.CurrencyNumericCode));
                 command.Parameters.Add(command.CreateParameter("@IN_Entity", currency.Entity));
                 command.Parameters.Add(command.CreateParameter("@IN_CurrencyType", currency.CurrencyType));
                 command.Parameters.Add(command.CreateParameter("@IN_AlphabeticCode", currency.AlphabeticCode));
                 command.Parameters.Add(command.CreateParameter("@IN_ExchangeRate", currency.ExchangeRate));
+                command.Parameters.Add(command.CreateParameter("@IN_UserID", currency.UserID));
 
                 return this.ToList(command).FirstOrDefault();
                 //return ExecuteNonQuery(StoredProcedures.MMCCurrencies_Insert, parameters, ServerType.MainServer);
             }
         }
 
-        protected IEnumerable<Currency> ToList(IDbCommand command)
+        protected List<Currency> ToList(IDbCommand command)
         {
             using (var record = command.ExecuteReader())
             {
@@ -57,7 +63,7 @@ namespace Portal.Infrastructure.Repositories
                     property.SetValue(objT, record[property.Name]);
             }
             return objT;
-        }              
+        }
 
         public void DeleteByCurrencyNumericCode(short CurrencyNumericCode, int userId)
         {
@@ -66,7 +72,16 @@ namespace Portal.Infrastructure.Repositories
 
         public Task<List<Currency>> GetCurrencyAsync(short? CurrencyNumericCode)
         {
-            throw new NotImplementedException();
+            using (var command = _context.CreateCommand())
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "MMCCurrencies_Get";
+                // Be careful CreateParameter is an extension
+                command.Parameters.Add(command.CreateParameter("@IN_CurrencyNumericCode", CurrencyNumericCode));
+                //List<Currency> test = ;
+                return Task.Run<List<Currency>>(() => this.ToList(command));
+                //return await this.ToList(command);
+            }
         }
 
         public void Update(Currency currency)

@@ -8,12 +8,12 @@ namespace Portal.Application.DTO
 {
     public class CurrencyDTO
     {
-        public short CurrencyNumericCode { get; private set; }
-        public string Entity { get; private set; }
-        public string CurrencyType { get; private set; }
-        public string AlphabeticCode { get; private set; }
-        public decimal ExchangeRate { get; private set; }
-        public int UserID { get; private set; }
+        public short CurrencyNumericCode { get; set; }
+        public string Entity { get; set; }
+        public string CurrencyType { get; set; }
+        public string AlphabeticCode { get; set; }
+        public decimal ExchangeRate { get; set; }
+        public int UserID { get; set; }
 
         public CurrencyDTO(short currencyNumericCode, string entity, string currencyType, string alphabeticCode, decimal exchangeRate, int userID)
         {

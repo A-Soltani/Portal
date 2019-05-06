@@ -11,12 +11,10 @@ namespace Portal.Application.Services
 {
     public class CurrencyService : ICurrencyService
     {
-        private readonly IConnectionFactory _connectionFactory;
         private readonly ICurrencyRepository _currencyRepository;
 
-        public CurrencyService(IConnectionFactory connectionFactory, ICurrencyRepository currencyRepository)
+        public CurrencyService(ICurrencyRepository currencyRepository)
         {
-            _connectionFactory = connectionFactory;
             _currencyRepository = currencyRepository;
         }
 
@@ -34,12 +32,14 @@ namespace Portal.Application.Services
 
         public Task<List<Currency>> GetCurrencyAsync(short? CurrencyNumericCode)
         {
-            throw new NotImplementedException();
+            return _currencyRepository.GetCurrencyAsync(CurrencyNumericCode);
         }
 
         public void UpdateCurrency(CurrencyDTO currencyDTO)
         {
-            throw new NotImplementedException();
+            //_currencyRepository.Update(currency);
+            Currency currency = Currency.CurrencyDefinition(currencyDTO.CurrencyNumericCode, currencyDTO.Entity, currencyDTO.CurrencyType, currencyDTO.AlphabeticCode, currencyDTO.ExchangeRate, currencyDTO.UserID);
+            
         }
     }
 }

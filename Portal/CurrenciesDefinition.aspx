@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CurrenciesDefinition.aspx.cs" Inherits="Portal.CurrenciesDefinition" %>
+﻿<%@ Page Language="C#" Async="true" AutoEventWireup="true" CodeBehind="CurrenciesDefinition.aspx.cs" Inherits="Portal.CurrenciesDefinition" %>
 
 <!DOCTYPE html>
 
@@ -52,9 +52,9 @@
 
             <br />
             <div id="SaveBtn" class="btnwrapper center" >
-                <a ID="btnCancel" runat="server" class="butt enseraf" title="انصراف"></a>
+                <a ID="btnCancel" runat="server" class="butt enseraf" title="انصراف">انصراف</a>
                 &nbsp;
-                <a ID="btnConfirm" runat="server" class="butt sabt sendToServer" title="ثبت"></a>
+                <a ID="btnConfirm" runat="server" class="butt sabt sendToServer" title="ثبت">ثبت</a>
             </div>
             <br />
         </div>

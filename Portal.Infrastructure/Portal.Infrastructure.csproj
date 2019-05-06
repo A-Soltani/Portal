@@ -31,6 +31,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.1.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Extensions.Microsoft.DependencyInjection, Version=0.0.0.0, Culture=neutral, PublicKeyToken=e767ac9c89543656, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.Extensions.Microsoft.DependencyInjection.6.1.0\lib\netstandard2.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.60.6\lib\net451\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -48,13 +60,22 @@
     <Compile Include="Repositories\AdoNetRepositories\AdoNetCurrencyRepository.cs" />
     <Compile Include="Repositories\AdoNetRepositories\SeedWork\AdoNetContext.cs" />
     <Compile Include="Repositories\AdoNetRepositories\SeedWork\AdoNetUnitOfWork.cs" />
-    <Compile Include="Repositories\AdoNetRepositories\SeedWork\DbConnectionFactory.cs" />
+    <Compile Include="Repositories\DapperRepositories\DapperCurrencyRepository.cs" />
+    <Compile Include="Repositories\DbConnectionFactory.cs" />
+    <Compile Include="Repositories\DapperRepositories\SeedWork\DapperContext.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Portal.Application\Portal.Application.csproj">
+      <Project>{8EA3B4E5-E4B4-490D-BB2A-FADA6C1AC417}</Project>
+      <Name>Portal.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Portal.Domain\Portal.Domain.csproj">
       <Project>{5D620AD9-C807-4CB4-81AD-30976F36CBC2}</Project>
       <Name>Portal.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
