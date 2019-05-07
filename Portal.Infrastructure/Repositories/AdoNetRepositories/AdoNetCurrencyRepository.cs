@@ -65,19 +65,19 @@ namespace Portal.Infrastructure.Repositories
             return objT;
         }
 
-        public void DeleteByCurrencyNumericCode(short CurrencyNumericCode, int userId)
+        public void DeleteByCurrencyNumericCode(short currencyNumericCode, int userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Currency>> GetCurrencyAsync(short? CurrencyNumericCode)
+        public Task<List<Currency>> GetCurrencyAsync(short? currencyNumericCode)
         {
             using (var command = _context.CreateCommand())
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "MMCCurrencies_Get";
                 // Be careful CreateParameter is an extension
-                command.Parameters.Add(command.CreateParameter("@IN_CurrencyNumericCode", CurrencyNumericCode));
+                command.Parameters.Add(command.CreateParameter("@IN_CurrencyNumericCode", currencyNumericCode));
                 //List<Currency> test = ;
                 return Task.Run<List<Currency>>(() => this.ToList(command));
                 //return await this.ToList(command);
@@ -89,7 +89,7 @@ namespace Portal.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Currency> GetCurrencyByNumericCodeAsync(short? CurrencyNumericCode)
+        public Task<Currency> GetCurrencyByNumericCodeAsync(short? currencyNumericCode)
         {
             throw new NotImplementedException();
         }

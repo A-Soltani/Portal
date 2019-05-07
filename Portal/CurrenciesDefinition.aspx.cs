@@ -1,4 +1,4 @@
-﻿using Portal.Application.DTO;
+﻿using Portal.Application.ModelDTOs;
 using Portal.Application.Services;
 using Portal.Domain.AggregatesModel.CurrencyAggregate;
 using Portal.Infrastructure;
@@ -30,17 +30,42 @@ namespace Portal
         #endregion
 
         protected override void OnInit(EventArgs e)
-        {            
+        {
             btnConfirm.ServerClick += new EventHandler(BtnConfirm_ServerClickNew);
+            btnUpdate.ServerClick += BtnUpdate_ServerClick;
+            btnDelete.ServerClick += BtnDelete_ServerClick;
+            btnGet.ServerClick += BtnGet_ServerClick;
+        }
+
+        private void BtnGet_ServerClick(object sender, EventArgs e)
+        {
+            RegisterAsyncTask(new PageAsyncTask(GetCurrencyAsync));
+        }
+
+        private void BtnDelete_ServerClick(object sender, EventArgs e)
+        {
+            _currencyService.DeleteCurrencyByNumericCode(Convert.ToInt16(txtInputCurrencyNumericCode.Text), 1);
+        }
+
+        private void BtnUpdate_ServerClick(object sender, EventArgs e)
+        {
+            int currentUserId = 1;
+            CurrencyDTO currencyDTO = new CurrencyDTO(
+                Convert.ToInt16(txtInputCurrencyNumericCode.Text),
+                txtEntity.Text,
+                txtCurrencyType.Text,
+                txtAlphabeticCode.Text,
+                txtExchangeRate.Text.ToDecimal(),
+                currentUserId);
+            _currencyService.UpdateCurrency(currencyDTO);
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            RegisterAsyncTask(new PageAsyncTask(GetCurrencyAsync));
         }
         private async Task GetCurrencyAsync()
-        {            
-            var currency = await _currencyService.GetCurrencyAsync(8);
+        {
+            var currency = await _currencyService.GetCurrencyAsync(Convert.ToInt16(txtInputCurrencyNumericCode.Text));
             txtInputCurrencyNumericCode.Text = currency.FirstOrDefault().CurrencyNumericCode.ToString();
             txtEntity.Text = currency.FirstOrDefault().Entity.ToString();
             txtCurrencyType.Text = currency.FirstOrDefault().CurrencyType.ToString();
@@ -52,26 +77,13 @@ namespace Portal
         {
             int currentUserId = 1;
             CurrencyDTO currencyDTO = new CurrencyDTO(
-                txtInputCurrencyNumericCode.Text.ToInt16(),
+                txtInputCurrencyNumericCode.Text.Toshort(),
                 txtEntity.Text,
                 txtCurrencyType.Text,
                 txtAlphabeticCode.Text,
                 txtExchangeRate.Text.ToDecimal(),
                 currentUserId);
-            _currencyService.UpdateCurrency(currencyDTO);
+            _currencyService.AddCurrency(currencyDTO);
         }
-
-        //void BtnConfirm_ServerClickNew(object sender, EventArgs e)
-        //{
-        //    int currentUserId = 1;
-        //    CurrencyDTO currencyDTO = new CurrencyDTO(
-        //        txtInputCurrencyNumericCode.Text.ToInt16(),
-        //        txtEntity.Text,
-        //        txtCurrencyType.Text,
-        //        txtAlphabeticCode.Text,
-        //        txtExchangeRate.Text.ToDecimal(),
-        //        currentUserId);
-        //    _currencyService.AddCurrency(currencyDTO);
-        //}
     }
 }

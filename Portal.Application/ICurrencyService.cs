@@ -1,4 +1,4 @@
-﻿using Portal.Application.DTO;
+﻿using Portal.Application.ModelDTOs;
 using Portal.Domain.AggregatesModel.CurrencyAggregate;
 using System;
 using System.Collections.Generic;
@@ -14,10 +14,10 @@ namespace Portal.Application
 
         void UpdateCurrency(CurrencyDTO currencyDTO);
         
-        void DeleteCurrencyByNumericCode(short CurrencyNumericCode, int userId);
+        void DeleteCurrencyByNumericCode(short currencyNumericCode, int userId);
 
-        Task<List<Currency>> GetCurrencyAsync(Int16? CurrencyNumericCode);
+        Task<List<Currency>> GetCurrencyAsync(short? currencyNumericCode);
 
-        Task<Currency> GetCurrencyByNumericCodeAsync(Int16? currencyNumericCode);
+        Task<Currency> GetCurrencyByNumericCodeAsync(short? currencyNumericCode);
     }
 }

@@ -18,11 +18,11 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
 
         // Why there are different parameter types for CurrencyNumericCode?
         //public BasketResult<bool> Delete(Int32 CurrencyNumericCode, int userId)
-        void DeleteByCurrencyNumericCode(short CurrencyNumericCode, int userId);
+        void DeleteByCurrencyNumericCode(short currencyNumericCode, int userId);
 
-        Task<List<Currency>> GetCurrencyAsync(Int16? CurrencyNumericCode);
+        Task<List<Currency>> GetCurrencyAsync(short? currencyNumericCode);
 
-        Task<Currency> GetCurrencyByNumericCodeAsync(Int16? CurrencyNumericCode);
+        Task<Currency> GetCurrencyByNumericCodeAsync(short? currencyNumericCode);
 
     }
 }

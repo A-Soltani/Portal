@@ -26,6 +26,7 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
 
         private Currency(short currencyNumericCode, string entity, string currencyType, string alphabeticCode, decimal exchangeRate, int userId)
         {
+            // What is the validation of currency?
             if (CurrencyNumericCode < 1 || ExchangeRate < 1 || string.IsNullOrWhiteSpace(Entity) || string.IsNullOrWhiteSpace(CurrencyType) || string.IsNullOrWhiteSpace(AlphabeticCode))
                 CurrencyNumericCode = currencyNumericCode;
 
@@ -47,6 +48,7 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
 
         public void UpdateCurrency(string entity, string currencyType, string alphabeticCode, decimal exchangeRate, int userId)
         {
+            // What is the validation of currency?
             if (ExchangeRate < 1 || string.IsNullOrWhiteSpace(Entity) || string.IsNullOrWhiteSpace(CurrencyType) || string.IsNullOrWhiteSpace(AlphabeticCode))
                 throw new Exception("There is an error.");
 

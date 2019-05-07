@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Portal.Application.DTO
+namespace Portal.Application.ModelDTOs
 {
     public class CurrencyDTO
     {

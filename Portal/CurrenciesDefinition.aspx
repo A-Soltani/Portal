@@ -55,6 +55,9 @@
                 <a ID="btnCancel" runat="server" class="butt enseraf" title="انصراف">انصراف</a>
                 &nbsp;
                 <a ID="btnConfirm" runat="server" class="butt sabt sendToServer" title="ثبت">ثبت</a>
+                <a ID="btnGet" runat="server" class="butt sabt sendToServer" title="پیدا کردن">پیدا کردن</a>
+                <a ID="btnUpdate" runat="server" class="butt sabt sendToServer" title="به روز رسانی">به روزرسانی</a>
+                <a ID="btnDelete" runat="server" class="butt enseraf" title="انصراف">حذف</a>
             </div>
             <br />
         </div>

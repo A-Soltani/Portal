@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\CurrencyDTO.cs" />
+    <Compile Include="ModelDTOs\CurrencyDTO.cs" />
     <Compile Include="ICurrencyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CurrencyServices.cs" />

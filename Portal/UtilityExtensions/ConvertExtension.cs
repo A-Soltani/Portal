@@ -133,10 +133,10 @@ namespace Portal.UtilityExtensions
         /// <summary>
         /// تبدیل رشته به عدد کوچک
         /// </summary>
-        public static Int16 ToInt16(this String str)
+        public static short Toshort(this String str)
         {
-            Int16 result;
-            if (Int16.TryParse(str, out result))
+            short result;
+            if (short.TryParse(str, out result))
                 return result;
             else
                 return 0;
@@ -145,10 +145,10 @@ namespace Portal.UtilityExtensions
         /// <summary>
         /// تبدیل آبجکت به عدد کوچک
         /// </summary>
-        public static Int16 ToInt16(this object obj)
+        public static short Toshort(this object obj)
         {
-            Int16 result;
-            if (Int16.TryParse(obj.ToString(), out result))
+            short result;
+            if (short.TryParse(obj.ToString(), out result))
                 return result;
             else
                 return 0;

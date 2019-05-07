@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Portal.Application.DTO;
+using Portal.Application.ModelDTOs;
 using Portal.Domain.AggregatesModel.CurrencyAggregate;
 using Portal.Domain.SeedWork.Repository;
 
@@ -25,14 +25,14 @@ namespace Portal.Application.Services
             return currency;
         }
 
-        public void DeleteCurrencyByNumericCode(short CurrencyNumericCode, int userId)
+        public void DeleteCurrencyByNumericCode(short currencyNumericCode, int userId)
         {
-            throw new NotImplementedException();
+            _currencyRepository.DeleteByCurrencyNumericCode(currencyNumericCode, userId);
         }
 
-        public Task<List<Currency>> GetCurrencyAsync(short? CurrencyNumericCode)
+        public Task<List<Currency>> GetCurrencyAsync(short? currencyNumericCode)
         {
-            return _currencyRepository.GetCurrencyAsync(CurrencyNumericCode);
+            return _currencyRepository.GetCurrencyAsync(currencyNumericCode);
         }
 
         public async Task<Currency> GetCurrencyByNumericCodeAsync(short? currencyNumericCode)

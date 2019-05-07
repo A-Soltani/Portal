@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Dapper;
-using Portal.Application.DTO;
+using Portal.Application.ModelDTOs;
 using Portal.Domain.AggregatesModel.CurrencyAggregate;
 using Portal.Domain.SeedWork;
 using Portal.Domain.SeedWork.Repository;
@@ -45,12 +45,18 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
             }
         }
 
-        public void DeleteByCurrencyNumericCode(short CurrencyNumericCode, int userId)
+        public void DeleteByCurrencyNumericCode(short currencyNumericCode, int userId)
         {
-            throw new NotImplementedException();
+            using (var _context = new DapperContext(DefaultConnection))
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@IN_CurrencyNumericCode", currencyNumericCode);
+                parameters.Add("@IN_UserID", userId);
+                _context.Connection.Query<Currency>("MMCCurrencies_Delete", parameters, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
         }
 
-        //public Task<List<Currency>> GetCurrencyAsync(short? CurrencyNumericCode)
+        //public Task<List<Currency>> GetCurrencyAsync(short? currencyNumericCode)
         //{
         //    using (var _context = new DapperContext(DefaultConnection))
         //    {
@@ -75,12 +81,12 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
         //    }
         //}
 
-        public async Task<List<Currency>> GetCurrencyAsync(short? CurrencyNumericCode)
+        public async Task<List<Currency>> GetCurrencyAsync(short? currencyNumericCode)
         {
             using (var _context = new DapperContext(DefaultConnection))
             {
                 var parameters = new DynamicParameters();
-                parameters.Add("@IN_CurrencyNumericCode", CurrencyNumericCode);
+                parameters.Add("@IN_CurrencyNumericCode", currencyNumericCode);
 
                 // Dapper is used to execute MMCCurrencies_Get sp and CurrencyDTO is only option to do it.
                 // You aren't allowed to apply Currency to output object because it's properties have private setter
@@ -115,12 +121,12 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
             }
         }
 
-        public async Task<Currency> GetCurrencyByNumericCodeAsync(short? CurrencyNumericCode)
+        public async Task<Currency> GetCurrencyByNumericCodeAsync(short? currencyNumericCode)
         {
             using (var _context = new DapperContext(DefaultConnection))
             {
                 var parameters = new DynamicParameters();
-                parameters.Add("@IN_CurrencyNumericCode", CurrencyNumericCode);
+                parameters.Add("@IN_CurrencyNumericCode", currencyNumericCode);
 
                 // Dapper is used to execute MMCCurrencies_Get sp and CurrencyDTO is only option to do it.
                 // You aren't allowed to apply Currency to output object because it's properties have private setter
