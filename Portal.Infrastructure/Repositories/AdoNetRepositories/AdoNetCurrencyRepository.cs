@@ -88,5 +88,10 @@ namespace Portal.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Task<Currency> GetCurrencyByNumericCodeAsync(short? CurrencyNumericCode)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

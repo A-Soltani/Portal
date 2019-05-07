@@ -17,5 +17,7 @@ namespace Portal.Application
         void DeleteCurrencyByNumericCode(short CurrencyNumericCode, int userId);
 
         Task<List<Currency>> GetCurrencyAsync(Int16? CurrencyNumericCode);
+
+        Task<Currency> GetCurrencyByNumericCodeAsync(Int16? currencyNumericCode);
     }
 }

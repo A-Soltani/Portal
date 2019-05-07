@@ -22,5 +22,7 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
 
         Task<List<Currency>> GetCurrencyAsync(Int16? CurrencyNumericCode);
 
+        Task<Currency> GetCurrencyByNumericCodeAsync(Int16? CurrencyNumericCode);
+
     }
 }

@@ -35,11 +35,23 @@ namespace Portal.Application.Services
             return _currencyRepository.GetCurrencyAsync(CurrencyNumericCode);
         }
 
-        public void UpdateCurrency(CurrencyDTO currencyDTO)
+        public async Task<Currency> GetCurrencyByNumericCodeAsync(short? currencyNumericCode)
         {
-            //_currencyRepository.Update(currency);
-            Currency currency = Currency.CurrencyDefinition(currencyDTO.CurrencyNumericCode, currencyDTO.Entity, currencyDTO.CurrencyType, currencyDTO.AlphabeticCode, currencyDTO.ExchangeRate, currencyDTO.UserID);
-            
+            return await _currencyRepository.GetCurrencyByNumericCodeAsync(currencyNumericCode);
+        }
+
+        public async void UpdateCurrency(CurrencyDTO currencyDTO)
+        {
+            // It must be checked that corresponding currency is in database. If not then an exception must be thrown.
+            Currency currency = await this.GetCurrencyByNumericCodeAsync(currencyDTO.CurrencyNumericCode);
+            if (currency == null)
+                throw new Exception("There isn't any currency with " + currencyDTO.CurrencyNumericCode + " CurrencyNumericCode.");
+
+            // Update currency in domain
+            currency.UpdateCurrency(currencyDTO.Entity, currencyDTO.CurrencyType, currencyDTO.AlphabeticCode, currencyDTO.ExchangeRate, currencyDTO.UserID);
+
+            // Update currency in database
+            _currencyRepository.Update(currency);
         }
     }
 }

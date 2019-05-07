@@ -58,7 +58,20 @@ namespace Portal
                 txtAlphabeticCode.Text,
                 txtExchangeRate.Text.ToDecimal(),
                 currentUserId);
-            _currencyService.AddCurrency(currencyDTO);
+            _currencyService.UpdateCurrency(currencyDTO);
         }
+
+        //void BtnConfirm_ServerClickNew(object sender, EventArgs e)
+        //{
+        //    int currentUserId = 1;
+        //    CurrencyDTO currencyDTO = new CurrencyDTO(
+        //        txtInputCurrencyNumericCode.Text.ToInt16(),
+        //        txtEntity.Text,
+        //        txtCurrencyType.Text,
+        //        txtAlphabeticCode.Text,
+        //        txtExchangeRate.Text.ToDecimal(),
+        //        currentUserId);
+        //    _currencyService.AddCurrency(currencyDTO);
+        //}
     }
 }
