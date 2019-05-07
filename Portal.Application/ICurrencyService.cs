@@ -14,10 +14,10 @@ namespace Portal.Application
 
         void UpdateCurrency(CurrencyDTO currencyDTO);
         
-        void DeleteCurrencyByNumericCode(short currencyNumericCode, int userId);
+        void DeleteCurrencyByNumericCode(int currencyNumericCode, int userId);
 
-        Task<List<Currency>> GetCurrencyAsync(short? currencyNumericCode);
+        Task<List<Currency>> GetCurrencyAsync(int? currencyNumericCode);
 
-        Task<Currency> GetCurrencyByNumericCodeAsync(short? currencyNumericCode);
+        Task<Currency> GetCurrencyByNumericCodeAsync(int? currencyNumericCode);
     }
 }

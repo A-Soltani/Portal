@@ -147,12 +147,12 @@ namespace Portal.Utility
             return Int64.TryParse(number, out result);
         }
 
-        public static string GenerateRandomStringNumber(short lenght)
+        public static string GenerateRandomStringNumber(int lenght)
         {
             string number = "";
             int randNumber = 0;
             Random random = new Random();
-            for (short i = 0; i < lenght; i++)
+            for (int i = 0; i < lenght; i++)
             {
                 randNumber = random.Next(0, 9);
                 if (i == 0 && randNumber == 0)

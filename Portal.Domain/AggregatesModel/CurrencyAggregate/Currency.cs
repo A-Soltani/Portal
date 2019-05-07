@@ -13,7 +13,7 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
         // Note that it is recommended to implement immutable Commands
         // In this case, its immutability is achieved by having all the setters as private
         // plus only being able to update the data just once, when creating the object through its constructor.
-        public short CurrencyNumericCode { get; private set; }
+        public int CurrencyNumericCode { get; private set; }
         public string Entity { get; private set; }
         public string CurrencyType { get; private set; }
         public string AlphabeticCode { get; private set; }
@@ -24,7 +24,7 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
         public string InsertDate { get; private set; }
         public string UpdateDate { get; private set; }
 
-        private Currency(short currencyNumericCode, string entity, string currencyType, string alphabeticCode, decimal exchangeRate, int userId)
+        private Currency(int currencyNumericCode, string entity, string currencyType, string alphabeticCode, decimal exchangeRate, int userId)
         {
             // What is the validation of currency?
             if (CurrencyNumericCode < 1 || ExchangeRate < 1 || string.IsNullOrWhiteSpace(Entity) || string.IsNullOrWhiteSpace(CurrencyType) || string.IsNullOrWhiteSpace(AlphabeticCode))
@@ -41,7 +41,7 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
         // This Order AggregateRoot's method "CurrencyDefinition()" should be the only way to add Items to the Order,
         // so any behavior (discounts, etc.) and validations are controlled by the AggregateRoot 
         // in order to maintain consistency between the whole Aggregate. 
-        public static Currency CurrencyDefinition(short currencyNumericCode, string entity, string currencyType, string alphabeticCode, decimal exchangeRate, int userId)
+        public static Currency CurrencyDefinition(int currencyNumericCode, string entity, string currencyType, string alphabeticCode, decimal exchangeRate, int userId)
         {
             return new Currency(currencyNumericCode, entity, currencyType, alphabeticCode, exchangeRate, userId);
         }

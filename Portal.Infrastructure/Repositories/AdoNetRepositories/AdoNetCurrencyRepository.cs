@@ -65,12 +65,12 @@ namespace Portal.Infrastructure.Repositories
             return objT;
         }
 
-        public void DeleteByCurrencyNumericCode(short currencyNumericCode, int userId)
+        public void DeleteByCurrencyNumericCode(int currencyNumericCode, int userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Currency>> GetCurrencyAsync(short? currencyNumericCode)
+        public Task<List<Currency>> GetCurrencyAsync(int? currencyNumericCode)
         {
             using (var command = _context.CreateCommand())
             {
@@ -89,7 +89,7 @@ namespace Portal.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Currency> GetCurrencyByNumericCodeAsync(short? currencyNumericCode)
+        public Task<Currency> GetCurrencyByNumericCodeAsync(int? currencyNumericCode)
         {
             throw new NotImplementedException();
         }

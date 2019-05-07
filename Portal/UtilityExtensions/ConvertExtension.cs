@@ -130,29 +130,7 @@ namespace Portal.UtilityExtensions
                 return 0;
         }
 
-        /// <summary>
-        /// تبدیل رشته به عدد کوچک
-        /// </summary>
-        public static short Toshort(this String str)
-        {
-            short result;
-            if (short.TryParse(str, out result))
-                return result;
-            else
-                return 0;
-        }
-
-        /// <summary>
-        /// تبدیل آبجکت به عدد کوچک
-        /// </summary>
-        public static short Toshort(this object obj)
-        {
-            short result;
-            if (short.TryParse(obj.ToString(), out result))
-                return result;
-            else
-                return 0;
-        }
+        
 
         /// <summary>
         /// تبدیل آبجکت به بایت

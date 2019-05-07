@@ -36,10 +36,20 @@ namespace Portal
             btnDelete.ServerClick += BtnDelete_ServerClick;
             btnGet.ServerClick += BtnGet_ServerClick;
         }
+        protected void Page_Load(object sender, EventArgs e)
+        {
+        }
 
         private void BtnGet_ServerClick(object sender, EventArgs e)
         {
-            RegisterAsyncTask(new PageAsyncTask(GetCurrencyAsync));
+            try
+            {
+                RegisterAsyncTask(new PageAsyncTask(GetCurrencyAsync));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private void BtnDelete_ServerClick(object sender, EventArgs e)
@@ -60,30 +70,42 @@ namespace Portal
             _currencyService.UpdateCurrency(currencyDTO);
         }
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-        }
         private async Task GetCurrencyAsync()
         {
-            var currency = await _currencyService.GetCurrencyAsync(Convert.ToInt16(txtInputCurrencyNumericCode.Text));
-            txtInputCurrencyNumericCode.Text = currency.FirstOrDefault().CurrencyNumericCode.ToString();
-            txtEntity.Text = currency.FirstOrDefault().Entity.ToString();
-            txtCurrencyType.Text = currency.FirstOrDefault().CurrencyType.ToString();
-            txtAlphabeticCode.Text = currency.FirstOrDefault().AlphabeticCode.ToString();
-            txtExchangeRate.Text = currency.FirstOrDefault().ExchangeRate.ToString();
+            try
+            {
+                var currency = await _currencyService.GetCurrencyAsync(Convert.ToInt16(txtInputCurrencyNumericCode.Text));
+                txtInputCurrencyNumericCode.Text = currency.FirstOrDefault().CurrencyNumericCode.ToString();
+                txtEntity.Text = currency.FirstOrDefault().Entity.ToString();
+                txtCurrencyType.Text = currency.FirstOrDefault().CurrencyType.ToString();
+                txtAlphabeticCode.Text = currency.FirstOrDefault().AlphabeticCode.ToString();
+                txtExchangeRate.Text = currency.FirstOrDefault().ExchangeRate.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         void BtnConfirm_ServerClickNew(object sender, EventArgs e)
         {
-            int currentUserId = 1;
-            CurrencyDTO currencyDTO = new CurrencyDTO(
-                txtInputCurrencyNumericCode.Text.Toshort(),
-                txtEntity.Text,
-                txtCurrencyType.Text,
-                txtAlphabeticCode.Text,
-                txtExchangeRate.Text.ToDecimal(),
-                currentUserId);
-            _currencyService.AddCurrency(currencyDTO);
+            try
+            {
+                int currentUserId = 1;
+                CurrencyDTO currencyDTO = new CurrencyDTO(
+                    Convert.ToInt32(txtInputCurrencyNumericCode.Text),
+                    txtEntity.Text,
+                    txtCurrencyType.Text,
+                    txtAlphabeticCode.Text,
+                    txtExchangeRate.Text.ToDecimal(),
+                    currentUserId);
+                _currencyService.AddCurrency(currencyDTO);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }

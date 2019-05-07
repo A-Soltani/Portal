@@ -45,7 +45,7 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
             }
         }
 
-        public void DeleteByCurrencyNumericCode(short currencyNumericCode, int userId)
+        public void DeleteByCurrencyNumericCode(int currencyNumericCode, int userId)
         {
             using (var _context = new DapperContext(DefaultConnection))
             {
@@ -56,7 +56,7 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
             }
         }
 
-        //public Task<List<Currency>> GetCurrencyAsync(short? currencyNumericCode)
+        //public Task<List<Currency>> GetCurrencyAsync(int? currencyNumericCode)
         //{
         //    using (var _context = new DapperContext(DefaultConnection))
         //    {
@@ -81,7 +81,7 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
         //    }
         //}
 
-        public async Task<List<Currency>> GetCurrencyAsync(short? currencyNumericCode)
+        public async Task<List<Currency>> GetCurrencyAsync(int? currencyNumericCode)
         {
             using (var _context = new DapperContext(DefaultConnection))
             {
@@ -90,7 +90,7 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
 
                 // Dapper is used to execute MMCCurrencies_Get sp and CurrencyDTO is only option to do it.
                 // You aren't allowed to apply Currency to output object because it's properties have private setter
-                List<CurrencyDTO> currencyDTOList = _context.Connection.Query<CurrencyDTO>("MMCCurrencies_Get", parameters, commandType: CommandType.StoredProcedure).ToList();
+                List<CurrencyDTO> currencyDTOList = await Task.Run<List<CurrencyDTO>>(() => _context.Connection.Query<CurrencyDTO>("MMCCurrencies_Get", parameters, commandType: CommandType.StoredProcedure).ToList());
 
                 // Following block is used for getting Currency map by AutoMapper
                 // First, there is a config for the mapper due to keep encapsulation in domain
@@ -102,7 +102,7 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
 
                 // Secondly there is a map between 
                 IMapper mapper = config.CreateMapper();
-                return await Task.Run<List<Currency>>(() => currencyDTOList.Select(c => mapper.Map<CurrencyDTO, Currency>(c)).ToList());
+                return currencyDTOList.Select(c => mapper.Map<CurrencyDTO, Currency>(c)).ToList();
             }
         }
 
@@ -121,7 +121,7 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
             }
         }
 
-        public async Task<Currency> GetCurrencyByNumericCodeAsync(short? currencyNumericCode)
+        public async Task<Currency> GetCurrencyByNumericCodeAsync(int? currencyNumericCode)
         {
             using (var _context = new DapperContext(DefaultConnection))
             {
