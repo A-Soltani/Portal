@@ -59,15 +59,22 @@ namespace Portal
 
         private void BtnUpdate_ServerClick(object sender, EventArgs e)
         {
-            int currentUserId = 1;
-            CurrencyDTO currencyDTO = new CurrencyDTO(
-                Convert.ToInt16(txtInputCurrencyNumericCode.Text),
-                txtEntity.Text,
-                txtCurrencyType.Text,
-                txtAlphabeticCode.Text,
-                txtExchangeRate.Text.ToDecimal(),
-                currentUserId);
-            _currencyService.UpdateCurrency(currencyDTO);
+            try
+            {
+                int currentUserId = 1;
+                CurrencyDTO currencyDTO = new CurrencyDTO(
+                    Convert.ToInt16(txtInputCurrencyNumericCode.Text),
+                    txtEntity.Text,
+                    txtCurrencyType.Text,
+                    txtAlphabeticCode.Text,
+                    txtExchangeRate.Text.ToDecimal(),
+                    currentUserId);
+                _currencyService.UpdateCurrency(currencyDTO);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private async Task GetCurrencyAsync()
