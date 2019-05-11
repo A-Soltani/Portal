@@ -17,21 +17,20 @@ namespace Portal.Application.Services
 
         public CurrencyService(ICurrencyRepository currencyRepository)
         {
-            _currencyRepository = currencyRepository;
+            _currencyRepository = currencyRepository ?? throw new ArgumentNullException(nameof(currencyRepository));
         }
 
-        public Currency AddCurrency(CurrencyDTO currencyDTO)
+        public bool AddCurrency(CurrencyDTO currencyDTO)
         {
             CurrencyValidator currencyValidator = new CurrencyValidator();
             var validationResult = currencyValidator.Validate(currencyDTO);
-            if (validationResult.IsValid)
-            {
-                Currency currency = Currency.CurrencyDefinition(currencyDTO.CurrencyNumericCode, currencyDTO.Entity, currencyDTO.CurrencyType, currencyDTO.AlphabeticCode, currencyDTO.ExchangeRate, currencyDTO.UserID);
-                _currencyRepository.Add(currency);
-                return currency;
-            }
-            else
+            if (!validationResult.IsValid)
                 throw new ValidationException("Validation exception", validationResult.Errors);
+
+            Currency currency = Currency.CurrencyDefinition(currencyDTO.CurrencyNumericCode, currencyDTO.Entity, currencyDTO.CurrencyType, currencyDTO.AlphabeticCode, currencyDTO.ExchangeRate, currencyDTO.UserID);
+            _currencyRepository.Add(currency);
+            return true;
+
         }
 
         public void DeleteCurrencyByNumericCode(int currencyNumericCode, int userId)

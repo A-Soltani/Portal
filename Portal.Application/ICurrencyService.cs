@@ -10,7 +10,7 @@ namespace Portal.Application
 {
     public interface ICurrencyService
     {
-        Currency AddCurrency(CurrencyDTO currencyDTO);
+        bool AddCurrency(CurrencyDTO currencyDTO);
 
         void UpdateCurrency(CurrencyDTO currencyDTO);
         
