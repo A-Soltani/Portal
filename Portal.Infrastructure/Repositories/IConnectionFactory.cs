@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace Portal.Domain.SeedWork.Repository
+namespace Portal.Infrastructure
 {
     public interface IConnectionFactory
     {

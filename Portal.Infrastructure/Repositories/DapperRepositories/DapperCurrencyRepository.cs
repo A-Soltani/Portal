@@ -3,7 +3,6 @@ using Dapper;
 using Portal.Application.ModelDTOs;
 using Portal.Domain.AggregatesModel.CurrencyAggregate;
 using Portal.Domain.SeedWork;
-using Portal.Domain.SeedWork.Repository;
 using Portal.Infrastructure.Extensions;
 using Portal.Infrastructure.Repositories.DapperRepositories.SeedWork;
 using System;
@@ -28,7 +27,7 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
             DefaultConnection = new DbConnectionFactory("MyConString");
         }
 
-        public Currency Add(Currency currency)
+        public async Task<Currency> Add(Currency currency)
         {
             using (var _context = new DapperContext(DefaultConnection))
             {
@@ -39,7 +38,7 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
                 parameters.Add("@IN_AlphabeticCode", currency.AlphabeticCode);
                 parameters.Add("@IN_ExchangeRate", currency.ExchangeRate);
                 parameters.Add("@IN_UserID", currency.UserID);
-                _context.Connection.Query<Currency>("MMCCurrencies_Insert", parameters, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                await _context.Connection.QueryAsync<Currency>("MMCCurrencies_Insert", parameters, commandType: CommandType.StoredProcedure);
 
                 return currency;
             }
@@ -90,15 +89,15 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
 
                 // Dapper is used to execute MMCCurrencies_Get sp and CurrencyDTO is only option to do it.
                 // You aren't allowed to apply Currency to output object because it's properties have private setter
-                List<CurrencyDTO> currencyDTOList = await Task.Run<List<CurrencyDTO>>(() => _context.Connection.Query<CurrencyDTO>("MMCCurrencies_Get", parameters, commandType: CommandType.StoredProcedure).ToList());
+                var currencyDTOList = await _context.Connection.QueryAsync<CurrencyDTO>("MMCCurrencies_Get", parameters, commandType: CommandType.StoredProcedure);
 
                 // Following block is used for getting Currency map by AutoMapper
                 // First, there is a config for the mapper due to keep encapsulation in domain
                 var config = new MapperConfiguration(cfg =>
-                {
-                    cfg.CreateMap<CurrencyDTO, Currency>()
-                    .ConstructUsing(cd => Currency.CurrencyDefinition(cd.CurrencyNumericCode, cd.Entity, cd.CurrencyType, cd.AlphabeticCode, cd.ExchangeRate, cd.UserID));
-                });
+                 {
+                     cfg.CreateMap<CurrencyDTO, Currency>()
+                      .ConstructUsing(cd => Currency.CurrencyDefinition(cd.CurrencyNumericCode, cd.Entity, cd.CurrencyType, cd.AlphabeticCode, cd.ExchangeRate, cd.UserID));
+                 });
 
                 // Secondly there is a map between 
                 IMapper mapper = config.CreateMapper();
@@ -130,8 +129,7 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
 
                 // Dapper is used to execute MMCCurrencies_Get sp and CurrencyDTO is only option to do it.
                 // You aren't allowed to apply Currency to output object because it's properties have private setter
-                CurrencyDTO currencyDTO = await Task.Run<CurrencyDTO>(() => 
-                    _context.Connection.Query<CurrencyDTO>("MMCCurrencies_Get", parameters, commandType: CommandType.StoredProcedure).FirstOrDefault());
+                CurrencyDTO currencyDTO = await _context.Connection.QueryFirstOrDefaultAsync<CurrencyDTO>("MMCCurrencies_Get", parameters, commandType: CommandType.StoredProcedure);
 
                 // Following block is used for getting Currency map by AutoMapper
                 // First, there is a config for the mapper due to keep encapsulation in domain

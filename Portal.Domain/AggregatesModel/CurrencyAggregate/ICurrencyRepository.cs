@@ -12,7 +12,7 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
     // as requisite for the Currency Aggregate
     public interface ICurrencyRepository : IRepository<Currency>
     {
-        Currency Add(Currency currency);
+        Task<Currency> Add(Currency currency);
 
         void Update(Currency currency);
 

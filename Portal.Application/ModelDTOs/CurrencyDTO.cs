@@ -15,14 +15,5 @@ namespace Portal.Application.ModelDTOs
         public decimal ExchangeRate { get; set; }
         public int UserID { get; set; }
 
-        public CurrencyDTO(int currencyNumericCode, string entity, string currencyType, string alphabeticCode, decimal exchangeRate, int userID)
-        {
-            CurrencyNumericCode = currencyNumericCode;
-            Entity = entity;
-            CurrencyType = currencyType;
-            AlphabeticCode = alphabeticCode;
-            ExchangeRate = exchangeRate;
-            UserID = userID;
-        }
     }
 }

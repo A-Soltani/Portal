@@ -51,7 +51,6 @@
     <Compile Include="SeedWork\IAggregateRoot.cs" />
     <Compile Include="SeedWork\IRepository.cs" />
     <Compile Include="SeedWork\IUnitOfWork.cs" />
-    <Compile Include="SeedWork\Repository\IConnectionFactory.cs" />
     <Compile Include="SeedWork\ValueObject.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,6 @@ using FluentValidation;
 using Portal.Application.ModelDTOs;
 using Portal.Application.Validations;
 using Portal.Domain.AggregatesModel.CurrencyAggregate;
-using Portal.Domain.SeedWork.Repository;
 
 namespace Portal.Application.Services
 {

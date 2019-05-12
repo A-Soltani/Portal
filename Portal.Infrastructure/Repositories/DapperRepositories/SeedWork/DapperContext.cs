@@ -1,5 +1,4 @@
 ﻿using Portal.Domain.SeedWork;
-using Portal.Domain.SeedWork.Repository;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,7 +14,7 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories.SeedWork
         private IConnectionFactory _connectionFactory;
         private readonly IDbConnection _connection;
         private readonly ReaderWriterLockSlim _rwLock = new ReaderWriterLockSlim();
-        private readonly LinkedList<AdoNetUnitOfWork> _uows = new LinkedList<AdoNetUnitOfWork>();
+        
 
         public IDbConnection Connection => _connection;
 
@@ -30,17 +29,7 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories.SeedWork
             _connection.Dispose();
         }
 
-        public IDbCommand CreateCommand()
-        {
-            var cmd = _connection.CreateCommand();
-
-            _rwLock.EnterReadLock();
-            if (_uows.Count > 0)
-                cmd.Transaction = _uows.First.Value.Transaction;
-            _rwLock.ExitReadLock();
-
-            return cmd;
-        }
+        
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
