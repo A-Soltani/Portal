@@ -19,7 +19,7 @@ namespace Portal.Infrastructure.AutofacModules
 
             // Register all the Command classes (they implement IRequestHandler) in assembly holding the Commands
             builder.RegisterAssemblyTypes(typeof(DefinationCurrencyCommand).GetTypeInfo().Assembly)
-                .AsClosedTypesOf(typeof(IRequestHandler<,>));            
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
 
             builder.Register<ServiceFactory>(context =>

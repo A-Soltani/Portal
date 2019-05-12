@@ -13,11 +13,14 @@ namespace Portal.Application.Commands
 {
     public class DefinationCurrencyCommandHandler : IRequestHandler<DefinationCurrencyCommand, bool>
     {
+        private readonly IMediator _mediator;
         private readonly ICurrencyRepository _currencyRepository;
 
         // Using DI to inject infrastructure persistence Repositories
-        public DefinationCurrencyCommandHandler(ICurrencyRepository currencyRepository)
+        public DefinationCurrencyCommandHandler(IMediator mediator,
+            ICurrencyRepository currencyRepository)
         {
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _currencyRepository = currencyRepository ?? throw new ArgumentNullException(nameof(currencyRepository));
         }
 

@@ -30,7 +30,8 @@ namespace Portal
         {
             // Build up your application container and register your dependencies.
             var builder = new ContainerBuilder();
-            builder.RegisterModule(new MediatorModule());
+            builder.RegisterType<Application.Commands.DefinationCurrencyCommand>();
+            //builder.RegisterModule(new MediatorModule());
             // ... continue registering dependencies...
 
             // Once you're done registering things, set the container
