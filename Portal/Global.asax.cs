@@ -1,83 +1,127 @@
-﻿using Autofac;
-using Autofac.Integration.Web;
-using MediatR;
-using Microsoft.AspNet.WebFormsDependencyInjection.Unity;
-using Portal.Infrastructure.AutofacModules;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Web;
-using System.Web.Security;
-using System.Web.SessionState;
+using System.Web.Compilation;
+using System.Web.UI;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+
+// Use the SimpleInjector.Integration.Web Nuget package
+using SimpleInjector;
+using SimpleInjector.Advanced;
+using SimpleInjector.Diagnostics;
+using SimpleInjector.Integration.Web;
+
+// Makes use of the System.ComponentModel.Composition assembly
+using System.ComponentModel.Composition;
+using MediatR;
+using System.Threading.Tasks;
+using System.Threading;
+
+[assembly: PreApplicationStartMethod(
+    typeof(Portal.PageInitializerModule), 
+    "Initialize")]
 
 namespace Portal
 {
-    public class Global : HttpApplication, Autofac.Integration.Web.IContainerProviderAccessor
+    public sealed class PageInitializerModule : IHttpModule
     {
-        // Provider that holds the application container.
-        static IContainerProvider _containerProvider;
-
-        // Instance property that will be used by Autofac HttpModules
-        // to resolve and inject dependencies.
-        public IContainerProvider ContainerProvider
+        public static void Initialize()
         {
-            get { return _containerProvider; }
+            DynamicModuleUtility.RegisterModule(typeof(PageInitializerModule));
         }
 
-        IContainerProvider IContainerProviderAccessor.ContainerProvider => _containerProvider;
+        void IHttpModule.Init(HttpApplication app)
+        {
+            app.PreRequestHandlerExecute += (sender, e) => {
+                var handler = app.Context.CurrentHandler;
+                if (handler != null)
+                {
+                    string name = handler.GetType().Assembly.FullName;
+                    if (!name.StartsWith("System.Web") &&
+                        !name.StartsWith("Microsoft"))
+                    {
+                        Global.InitializeHandler(handler);
+                    }
+                }
+            };
+        }
+
+        void IHttpModule.Dispose() { }
+    }
+
+    public class Global : HttpApplication
+    {
+        private static Container container;
+
+        public static void InitializeHandler(IHttpHandler handler)
+        {
+            Type handlerType = handler is Page
+                    ? handler.GetType().BaseType
+                    : handler.GetType();
+            container.GetRegistration(handlerType, true).Registration
+                .InitializeInstance(handler);
+        }
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            // Build up your application container and register your dependencies.
-            var builder = new ContainerBuilder();
-            builder.RegisterType<Application.Commands.DefinationCurrencyCommand>();
-            //builder.RegisterModule(new MediatorModule());
-            // ... continue registering dependencies...
+            Mediator();
+        }
 
-            // Once you're done registering things, set the container
-            // provider up with your registrations.
-            _containerProvider = new ContainerProvider(builder.Build());
+        private static void Mediator()
+        {
+            // 1. Create a new Simple Injector container.
+            var container = new Container();
+
+            container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
+
+            // Register a custom PropertySelectionBehavior to enable property injection.
+            container.Options.PropertySelectionBehavior =
+                new ImportAttributePropertySelectionBehavior();
+
+            // 2. Configure the container (register)
+            container.Register<IMediator>();
+
+            // Register your Page classes to allow them to be verified and diagnosed.
+            RegisterWebPages(container);
+
+            // 3. Store the container for use by Page classes.
+            Global.container = container;
+
+            // 3. Verify the container's configuration.
+            container.Verify();
+        }
+
+        private static void RegisterWebPages(Container container)
+        {
+            var pageTypes =
+                from assembly in BuildManager.GetReferencedAssemblies().Cast<Assembly>()
+                where !assembly.IsDynamic
+                where !assembly.GlobalAssemblyCache
+                from type in assembly.GetExportedTypes()
+                where type.IsSubclassOf(typeof(Page))
+                where !type.IsAbstract && !type.IsGenericType
+                select type;
+
+            foreach (Type type in pageTypes)
+            {
+                var reg = Lifestyle.Transient.CreateRegistration(type, container);
+                reg.SuppressDiagnosticWarning(
+                    DiagnosticType.DisposableTransientComponent,
+                    "ASP.NET creates and disposes page classes for us.");
+                container.AddRegistration(type, reg);
+            }
+        }
+
+        class ImportAttributePropertySelectionBehavior : IPropertySelectionBehavior
+        {
+            public bool SelectProperty(Type implementationType, PropertyInfo property)
+            {
+                // Makes use of the System.ComponentModel.Composition assembly
+                return typeof(Page).IsAssignableFrom(implementationType) &&
+                    property.GetCustomAttributes(typeof(ImportAttribute), true).Any();
+            }
         }
     }
-    //public class Global : System.Web.HttpApplication
-    //{
-
-    //    protected void Application_Start(object sender, EventArgs e)
-    //    {
-    //        var container = new ContainerBuilder();
-
-    //        container.RegisterModule(new MediatorModule());
-
-    //    }
-
-    //    protected void Session_Start(object sender, EventArgs e)
-    //    {
-
-    //    }
-
-    //    protected void Application_BeginRequest(object sender, EventArgs e)
-    //    {
-
-    //    }
-
-    //    protected void Application_AuthenticateRequest(object sender, EventArgs e)
-    //    {
-
-    //    }
-
-    //    protected void Application_Error(object sender, EventArgs e)
-    //    {
-
-    //    }
-
-    //    protected void Session_End(object sender, EventArgs e)
-    //    {
-
-    //    }
-
-    //    protected void Application_End(object sender, EventArgs e)
-    //    {
-
-    //    }
-    //}
+    
 }

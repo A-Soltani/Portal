@@ -1,4 +1,7 @@
 ﻿
+using Autofac;
+using Autofac.Integration.Web;
+using Autofac.Integration.Web.Forms;
 using MediatR;
 using Portal.Application.Commands;
 using Portal.Application.ModelDTOs;
@@ -10,6 +13,7 @@ using Portal.Infrastructure.Repositories.DapperRepositories;
 using Portal.UtilityExtensions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,12 +23,15 @@ using System.Web.UI.WebControls;
 
 namespace Portal
 {
+    
     public partial class CurrenciesDefinition : System.Web.UI.Page
     {
         int currentUserId = 1;
 
         private static CancellationTokenSource cltToken;
-        public IMediator Service { get; set; }
+        //public IMediator Service { get; set; }
+
+        [Import] public IMediator Service { get; set; }
 
         #region Services
 
@@ -33,6 +40,10 @@ namespace Portal
         public CurrenciesDefinition()
         {
             _currencyService = _currencyService ?? new CurrencyService(new DapperCurrencyRepository());
+
+            //var cpa = (IContainerProviderAccessor)HttpContext.Current.ApplicationInstance;
+            //var cp = cpa.ContainerProvider;
+            //cp.RequestLifetime.InjectProperties(this);
         }
 
         #endregion
@@ -157,26 +168,36 @@ namespace Portal
 
         private async Task DefinationCurrencyCommand()
         {
-            CurrencyDTO currencyDTO = new CurrencyDTO()
+            try
             {
-                AlphabeticCode = txtAlphabeticCode.Text,
-                CurrencyNumericCode = Convert.ToInt16(txtInputCurrencyNumericCode.Text),
-                Entity = txtEntity.Text,
-                CurrencyType = txtCurrencyType.Text,
-                ExchangeRate = txtExchangeRate.Text.ToDecimal(),
-                UserID = currentUserId
-            };
+
+                CurrencyDTO currencyDTO = new CurrencyDTO()
+                {
+                    AlphabeticCode = txtAlphabeticCode.Text,
+                    CurrencyNumericCode = Convert.ToInt16(txtInputCurrencyNumericCode.Text),
+                    Entity = txtEntity.Text,
+                    CurrencyType = txtCurrencyType.Text,
+                    ExchangeRate = txtExchangeRate.Text.ToDecimal(),
+                    UserID = currentUserId
+                };
 
 
-            //DefinationCurrencyCommandHandler definationCurrencyCommandHandler = new DefinationCurrencyCommandHandler(new DapperCurrencyRepository());
-            DefinationCurrencyCommand definationCurrencyCommand = new DefinationCurrencyCommand(currencyDTO, currentUserId);
-            var cltToken = new System.Threading.CancellationToken();
-            //var isSuccess = await definationCurrencyCommandHandler.Handle(definationCurrencyCommand, cltToken);
-            var isSuccess = await Service.Send(definationCurrencyCommand);
-            if (isSuccess)
-                lblMessage.Text = "عملیات تعریف ارز با موفقیت انجام شد.";
-            else
-                lblMessage.Text = "خطایی در تعریف ارز رخ داده است.";
+                //DefinationCurrencyCommandHandler definationCurrencyCommandHandler = new DefinationCurrencyCommandHandler(new DapperCurrencyRepository());
+                DefinationCurrencyCommand definationCurrencyCommand = new DefinationCurrencyCommand(currencyDTO, currentUserId);
+                var cltToken = new System.Threading.CancellationToken();
+                //var isSuccess = await definationCurrencyCommandHandler.Handle(definationCurrencyCommand, cltToken);
+
+                var isSuccess = await Service.Send(definationCurrencyCommand);
+                if (isSuccess)
+                    lblMessage.Text = "عملیات تعریف ارز با موفقیت انجام شد.";
+                else
+                    lblMessage.Text = "خطایی در تعریف ارز رخ داده است.";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }

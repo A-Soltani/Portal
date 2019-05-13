@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace Portal.Application.Commands
 {
+    // MediatR commands
+    // In IRequestHandler, there is the inpput DefinationCurrencyCommand and one outpput that is boolean value.
     public class DefinationCurrencyCommandHandler : IRequestHandler<DefinationCurrencyCommand, bool>
     {
         private readonly IMediator _mediator;
@@ -24,6 +26,8 @@ namespace Portal.Application.Commands
             _currencyRepository = currencyRepository ?? throw new ArgumentNullException(nameof(currencyRepository));
         }
 
+        // MediatR commands
+        // This method handels message. It is responsible for getting inpput message and returning proper output.
         public async Task<bool> Handle(DefinationCurrencyCommand message, CancellationToken cancellationToken)
         {            
             // Validation ...
