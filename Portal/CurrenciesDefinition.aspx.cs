@@ -1,7 +1,5 @@
 ﻿
-using Autofac;
-using Autofac.Integration.Web;
-using Autofac.Integration.Web.Forms;
+
 using MediatR;
 using Portal.Application.Commands;
 using Portal.Application.ModelDTOs;
@@ -41,9 +39,7 @@ namespace Portal
         {
             _currencyService = _currencyService ?? new CurrencyService(new DapperCurrencyRepository());
 
-            //var cpa = (IContainerProviderAccessor)HttpContext.Current.ApplicationInstance;
-            //var cp = cpa.ContainerProvider;
-            //cp.RequestLifetime.InjectProperties(this);
+           
         }
 
         #endregion

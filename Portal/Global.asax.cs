@@ -17,6 +17,10 @@ using System.ComponentModel.Composition;
 using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections.Generic;
+using MediatR.Pipeline;
+using Microsoft.Extensions.DependencyInjection;
+using Portal.Application.Commands;
 
 [assembly: PreApplicationStartMethod(
     typeof(Portal.PageInitializerModule), 
@@ -72,6 +76,7 @@ namespace Portal
         {
             // 1. Create a new Simple Injector container.
             var container = new Container();
+            var assemblies = GetAssemblies().ToArray();
 
             container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
 
@@ -79,17 +84,32 @@ namespace Portal
             container.Options.PropertySelectionBehavior =
                 new ImportAttributePropertySelectionBehavior();
 
-            // 2. Configure the container (register)
-            container.Register<IMediator>();
-
             // Register your Page classes to allow them to be verified and diagnosed.
             RegisterWebPages(container);
 
             // 3. Store the container for use by Page classes.
-            Global.container = container;
+            Global.container = container;         
 
-            // 3. Verify the container's configuration.
+            container.RegisterSingleton<IMediator, Mediator>();
+            container.Register(typeof(IRequestHandler<,>), assemblies);
+            container.Collection.Register(typeof(IPipelineBehavior<,>), Enumerable.Empty<Type>());
+            container.Collection.Register(typeof(IRequestPreProcessor<>), Enumerable.Empty<Type>());
+            container.Collection.Register(typeof(IRequestPostProcessor<,>), Enumerable.Empty<Type>());
+
+            //container.Register(typeof(IRequestHandler<,>), typeof(DefinationCurrencyCommand));
+
+
+            container.Register(() => new ServiceFactory(container.GetInstance), Lifestyle.Singleton);
+
             container.Verify();
+
+        }
+
+       
+
+        private static IEnumerable<Assembly> GetAssemblies()
+        {
+            yield return typeof(IMediator).GetTypeInfo().Assembly;
         }
 
         private static void RegisterWebPages(Container container)
