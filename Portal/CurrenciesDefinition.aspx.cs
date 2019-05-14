@@ -179,7 +179,8 @@ namespace Portal
 
 
                 //DefinationCurrencyCommandHandler definationCurrencyCommandHandler = new DefinationCurrencyCommandHandler(new DapperCurrencyRepository());
-                DefinationCurrencyCommand definationCurrencyCommand = new DefinationCurrencyCommand(currencyDTO, currentUserId);
+                //DefinationCurrencyCommand definationCurrencyCommand = new DefinationCurrencyCommand(currencyDTO, currentUserId);
+                DefinationCurrencyCommand definationCurrencyCommand = new DefinationCurrencyCommand() { Currency = currencyDTO, UserID = currentUserId };
                 var cltToken = new System.Threading.CancellationToken();
                 //var isSuccess = await definationCurrencyCommandHandler.Handle(definationCurrencyCommand, cltToken);
 

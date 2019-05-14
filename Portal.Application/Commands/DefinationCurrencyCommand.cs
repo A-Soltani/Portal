@@ -10,14 +10,14 @@ namespace Portal.Application.Commands
 {
     public class DefinationCurrencyCommand : IRequest<bool>
     {
-        public CurrencyDTO Currency { get; private set; }
-        public int UserID { get; private set; }
+        public CurrencyDTO Currency { get; set; }
+        public int UserID { get; set; }
 
-        public DefinationCurrencyCommand(CurrencyDTO currency, int userID)
-        {
-            Currency = currency;
-            UserID = userID;
-        }
+        //public DefinationCurrencyCommand(CurrencyDTO currency, int userID)
+        //{
+        //    Currency = currency;
+        //    UserID = userID;
+        //}
 
     }
 }

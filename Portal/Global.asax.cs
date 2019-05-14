@@ -23,7 +23,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Portal.Application.Commands;
 
 [assembly: PreApplicationStartMethod(
-    typeof(Portal.PageInitializerModule), 
+    typeof(Portal.PageInitializerModule),
     "Initialize")]
 
 namespace Portal
@@ -37,7 +37,8 @@ namespace Portal
 
         void IHttpModule.Init(HttpApplication app)
         {
-            app.PreRequestHandlerExecute += (sender, e) => {
+            app.PreRequestHandlerExecute += (sender, e) =>
+            {
                 var handler = app.Context.CurrentHandler;
                 if (handler != null)
                 {
@@ -88,13 +89,18 @@ namespace Portal
             RegisterWebPages(container);
 
             // 3. Store the container for use by Page classes.
-            Global.container = container;         
+            Global.container = container;
 
             container.RegisterSingleton<IMediator, Mediator>();
-            container.Register(typeof(IRequestHandler<,>), assemblies);
+            //container.Register(typeof(IRequestHandler<,>), assemblies);
             container.Collection.Register(typeof(IPipelineBehavior<,>), Enumerable.Empty<Type>());
             container.Collection.Register(typeof(IRequestPreProcessor<>), Enumerable.Empty<Type>());
             container.Collection.Register(typeof(IRequestPostProcessor<,>), Enumerable.Empty<Type>());
+            container.Collection.Register(typeof(IRequestHandler<,>), assemblies);
+            //container.Register(typeof(IRequest), typeof(DefinationCurrencyCommand));
+            //container.Register(typeof(IRequestHandler<,>), typeof(DefinationCurrencyCommandHandler<>.Handler));
+
+            //container.Register(typeof(DefinationCurrencyCommand) , typeof(IRequestHandler<,>));
 
             //container.Register(typeof(IRequestHandler<,>), typeof(DefinationCurrencyCommand));
 
@@ -105,7 +111,7 @@ namespace Portal
 
         }
 
-       
+
 
         private static IEnumerable<Assembly> GetAssemblies()
         {
@@ -143,5 +149,5 @@ namespace Portal
             }
         }
     }
-    
+
 }
