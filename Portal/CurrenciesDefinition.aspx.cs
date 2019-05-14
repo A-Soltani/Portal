@@ -29,7 +29,8 @@ namespace Portal
         private static CancellationTokenSource cltToken;
         //public IMediator Service { get; set; }
 
-        [Import] public IMediator Service { get; set; }
+        //[Import] public IMediator Service { get; set; }
+        public IMediator Service { get; set; }
 
         #region Services
 
