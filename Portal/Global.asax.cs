@@ -49,12 +49,44 @@ namespace Portal
         {
             // Build up your application container and register your dependencies.
             var builder = new ContainerBuilder();
-            builder.RegisterModule(new MediatorModule());
+            //builder.RegisterModule(new MediatorModule());
             // ... continue registering dependencies...
 
             // Once you're done registering things, set the container
             // provider up with your registrations.
-            _containerProvider = new ContainerProvider(builder.Build());
+
+            builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
+
+            var mediatrOpenTypes = new[]
+            {
+                typeof(IRequestHandler<,>),
+                typeof(INotificationHandler<>),
+            };
+
+            foreach (var mediatrOpenType in mediatrOpenTypes)
+            {
+                builder
+                    .RegisterAssemblyTypes(typeof(DefinationCurrencyCommand).GetTypeInfo().Assembly)
+                    .AsClosedTypesOf(mediatrOpenType)
+                    .AsImplementedInterfaces();
+            }
+
+
+
+            builder.Register<ServiceFactory>(ctx =>
+            {
+                var c = ctx.Resolve<IComponentContext>();
+                return t => c.Resolve(t);
+            });
+
+            //var container = builder.Build();
+
+
+            var container = builder.Build();
+            var mediator = container.Resolve<IMediator>();
+            _containerProvider = new ContainerProvider(container);
+
+
         }
     }
 }
