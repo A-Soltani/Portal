@@ -1,23 +1,14 @@
 ﻿
-
 using MediatR;
 using Portal.Application.Commands;
 using Portal.Application.ModelDTOs;
 using Portal.Application.Services;
-using Portal.Domain.AggregatesModel.CurrencyAggregate;
-using Portal.Infrastructure;
-using Portal.Infrastructure.Repositories;
 using Portal.Infrastructure.Repositories.DapperRepositories;
 using Portal.UtilityExtensions;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace Portal
 {

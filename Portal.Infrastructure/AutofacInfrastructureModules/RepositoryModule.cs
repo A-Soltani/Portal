@@ -1,16 +1,11 @@
 ﻿using Autofac;
 using Portal.Domain.AggregatesModel.CurrencyAggregate;
 using Portal.Infrastructure.Repositories.DapperRepositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Portal.Infrastructure.AutofacModules
+
+namespace Portal.Infrastructure.AutofacInfrastructureModules
 {
-    public class ApplicationModule
-        : Autofac.Module
+    public class RepositoryModule : Autofac.Module
     {
 
         public string QueriesConnectionString { get; }

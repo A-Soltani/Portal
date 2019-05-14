@@ -63,8 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutofacModules\ApplicationModule.cs" />
-    <Compile Include="AutofacModules\MediatorModule.cs" />
+    <Compile Include="AutofacInfrastructureModules\RepositoryModule.cs" />
     <Compile Include="Extensions\IDataRecordExtensions.cs" />
     <Compile Include="Extensions\IDbCommandExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

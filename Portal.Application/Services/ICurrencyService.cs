@@ -1,4 +1,5 @@
-﻿namespace Portal.Application.Services
+﻿
+namespace Portal.Application.Services
 {
     public interface ICurrencyService
     {

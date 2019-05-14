@@ -1,31 +1,9 @@
 ﻿using System;
-using System.Linq;
-using System.Reflection;
 using System.Web;
-using System.Web.Compilation;
-using System.Web.UI;
-using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
-// Use the SimpleInjector.Integration.Web Nuget package
-using SimpleInjector;
-using SimpleInjector.Advanced;
-using SimpleInjector.Diagnostics;
-using SimpleInjector.Integration.Web;
-
-// Makes use of the System.ComponentModel.Composition assembly
-using System.ComponentModel.Composition;
-using MediatR;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Collections.Generic;
-using MediatR.Pipeline;
-using Microsoft.Extensions.DependencyInjection;
-using Portal.Application.Commands;
 using Autofac.Integration.Web;
 using Autofac;
-using Portal.Infrastructure.AutofacModules;
-using Portal.Infrastructure.Repositories.DapperRepositories;
-using Portal.Domain.AggregatesModel.CurrencyAggregate;
+using Portal.Application.AutofacApplicationModules;
+using Portal.Infrastructure.AutofacInfrastructureModules;
 
 namespace Portal
 {
@@ -48,7 +26,7 @@ namespace Portal
             // Build up your application container and register your dependencies.
             var builder = new ContainerBuilder();           
 
-            builder.RegisterModule(new ApplicationModule());
+            builder.RegisterModule(new RepositoryModule());
             builder.RegisterModule(new MediatorModule());          
 
             _containerProvider = new ContainerProvider(builder.Build());

@@ -1,14 +1,9 @@
 ﻿using Autofac;
 using MediatR;
 using Portal.Application.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Portal.Infrastructure.AutofacModules
+namespace Portal.Application.AutofacApplicationModules
 {
     public class MediatorModule : Autofac.Module
     {

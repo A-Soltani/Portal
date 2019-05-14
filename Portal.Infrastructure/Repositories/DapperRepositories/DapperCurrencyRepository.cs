@@ -3,13 +3,11 @@ using Dapper;
 using Portal.Application.ModelDTOs;
 using Portal.Domain.AggregatesModel.CurrencyAggregate;
 using Portal.Domain.SeedWork;
-using Portal.Infrastructure.Extensions;
 using Portal.Infrastructure.Repositories.DapperRepositories.SeedWork;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Portal.Infrastructure.Repositories.DapperRepositories

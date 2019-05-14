@@ -1,11 +1,7 @@
-﻿using FluentValidation;
-using MediatR;
-using Portal.Application.Validations;
+﻿using MediatR;
 using Portal.Domain.AggregatesModel.CurrencyAggregate;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using System.Threading;
 using System.Threading.Tasks;
 
