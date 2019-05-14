@@ -24,10 +24,8 @@ using Portal.Application.Commands;
 using Autofac.Integration.Web;
 using Autofac;
 using Portal.Infrastructure.AutofacModules;
-
-//[assembly: PreApplicationStartMethod(
-//    typeof(Portal.PageInitializerModule),
-//    "Initialize")]
+using Portal.Infrastructure.Repositories.DapperRepositories;
+using Portal.Domain.AggregatesModel.CurrencyAggregate;
 
 namespace Portal
 {
@@ -48,171 +46,13 @@ namespace Portal
         protected void Application_Start(object sender, EventArgs e)
         {
             // Build up your application container and register your dependencies.
-            var builder = new ContainerBuilder();
-            //builder.RegisterModule(new MediatorModule());
-            // ... continue registering dependencies...
+            var builder = new ContainerBuilder();           
 
-            // Once you're done registering things, set the container
-            // provider up with your registrations.
+            builder.RegisterModule(new ApplicationModule());
+            builder.RegisterModule(new MediatorModule());          
 
-            builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
-
-            var mediatrOpenTypes = new[]
-            {
-                typeof(IRequestHandler<,>),
-                typeof(INotificationHandler<>),
-            };
-
-            foreach (var mediatrOpenType in mediatrOpenTypes)
-            {
-                builder
-                    .RegisterAssemblyTypes(typeof(DefinationCurrencyCommand).GetTypeInfo().Assembly)
-                    .AsClosedTypesOf(mediatrOpenType)
-                    .AsImplementedInterfaces();
-            }
-
-
-
-            builder.Register<ServiceFactory>(ctx =>
-            {
-                var c = ctx.Resolve<IComponentContext>();
-                return t => c.Resolve(t);
-            });
-
-            //var container = builder.Build();
-
-
-            var container = builder.Build();
-            var mediator = container.Resolve<IMediator>();
-            _containerProvider = new ContainerProvider(container);
-
-
+            _containerProvider = new ContainerProvider(builder.Build());
         }
     }
 }
 
-//namespace Portal
-//{
-//    public sealed class PageInitializerModule : IHttpModule
-//    {
-//        public static void Initialize()
-//        {
-//            DynamicModuleUtility.RegisterModule(typeof(PageInitializerModule));
-//        }
-
-//        void IHttpModule.Init(HttpApplication app)
-//        {
-//            app.PreRequestHandlerExecute += (sender, e) =>
-//            {
-//                var handler = app.Context.CurrentHandler;
-//                if (handler != null)
-//                {
-//                    string name = handler.GetType().Assembly.FullName;
-//                    if (!name.StartsWith("System.Web") &&
-//                        !name.StartsWith("Microsoft"))
-//                    {
-//                        Global.InitializeHandler(handler);
-//                    }
-//                }
-//            };
-//        }
-
-//        void IHttpModule.Dispose() { }
-//    }
-
-//    public class Global : HttpApplication
-//    {
-//        private static Container container;
-
-//        public static void InitializeHandler(IHttpHandler handler)
-//        {
-//            Type handlerType = handler is Page
-//                    ? handler.GetType().BaseType
-//                    : handler.GetType();
-//            container.GetRegistration(handlerType, true).Registration
-//                .InitializeInstance(handler);
-//        }
-
-//        protected void Application_Start(object sender, EventArgs e)
-//        {
-//            Mediator();
-//        }
-
-//        private static void Mediator()
-//        {
-//            // 1. Create a new Simple Injector container.
-//            var container = new Container();
-//            var assemblies = GetAssemblies().ToArray();
-
-//            container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
-
-//            // Register a custom PropertySelectionBehavior to enable property injection.
-//            container.Options.PropertySelectionBehavior =
-//                new ImportAttributePropertySelectionBehavior();
-
-//            // Register your Page classes to allow them to be verified and diagnosed.
-//            RegisterWebPages(container);
-
-//            // 3. Store the container for use by Page classes.
-//            Global.container = container;
-
-//            container.RegisterSingleton<IMediator, Mediator>();
-//            //container.Register(typeof(IRequestHandler<,>), assemblies);
-//            container.Collection.Register(typeof(IPipelineBehavior<,>), Enumerable.Empty<Type>());
-//            container.Collection.Register(typeof(IRequestPreProcessor<>), Enumerable.Empty<Type>());
-//            container.Collection.Register(typeof(IRequestPostProcessor<,>), Enumerable.Empty<Type>());
-//            container.Collection.Register(typeof(IRequestHandler<,>), assemblies);
-//            //container.Register(typeof(IRequest), typeof(DefinationCurrencyCommand));
-//            //container.Register(typeof(IRequestHandler<,>), typeof(DefinationCurrencyCommandHandler<>.Handler));
-
-//            //container.Register(typeof(DefinationCurrencyCommand) , typeof(IRequestHandler<,>));
-
-//            //container.Register(typeof(IRequestHandler<,>), typeof(DefinationCurrencyCommand));
-
-
-//            container.Register(() => new ServiceFactory(container.GetInstance), Lifestyle.Singleton);
-
-//            container.Verify();
-
-//        }
-
-
-
-//        private static IEnumerable<Assembly> GetAssemblies()
-//        {
-//            yield return typeof(IMediator).GetTypeInfo().Assembly;
-//        }
-
-//        private static void RegisterWebPages(Container container)
-//        {
-//            var pageTypes =
-//                from assembly in BuildManager.GetReferencedAssemblies().Cast<Assembly>()
-//                where !assembly.IsDynamic
-//                where !assembly.GlobalAssemblyCache
-//                from type in assembly.GetExportedTypes()
-//                where type.IsSubclassOf(typeof(Page))
-//                where !type.IsAbstract && !type.IsGenericType
-//                select type;
-
-//            foreach (Type type in pageTypes)
-//            {
-//                var reg = Lifestyle.Transient.CreateRegistration(type, container);
-//                reg.SuppressDiagnosticWarning(
-//                    DiagnosticType.DisposableTransientComponent,
-//                    "ASP.NET creates and disposes page classes for us.");
-//                container.AddRegistration(type, reg);
-//            }
-//        }
-
-//        class ImportAttributePropertySelectionBehavior : IPropertySelectionBehavior
-//        {
-//            public bool SelectProperty(Type implementationType, PropertyInfo property)
-//            {
-//                // Makes use of the System.ComponentModel.Composition assembly
-//                return typeof(Page).IsAssignableFrom(implementationType) &&
-//                    property.GetCustomAttributes(typeof(ImportAttribute), true).Any();
-//            }
-//        }
-//    }
-
-//}

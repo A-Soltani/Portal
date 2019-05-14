@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Autofac;
+using Portal.Domain.AggregatesModel.CurrencyAggregate;
+using Portal.Infrastructure.Repositories.DapperRepositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,24 +15,17 @@ namespace Portal.Infrastructure.AutofacModules
 
         public string QueriesConnectionString { get; }
 
-        public ApplicationModule(string qconstr)
-        {
-            QueriesConnectionString = qconstr;
-        }
+        //public ApplicationModule(string qconstr)
+        //{
+        //    QueriesConnectionString = qconstr;
+        //}      
 
         protected override void Load(Autofac.ContainerBuilder builder)
         {
 
-            //builder.Register(c => new OrderQueries(QueriesConnectionString))
-            //    .As<IOrderQueries>()
-            //    .InstancePerLifetimeScope();          
-
-            //builder.RegisterType<DapperRepository>()
-            //    .As<IOrderRepository>()
-            //    .InstancePerLifetimeScope();
-
-            //builder.RegisterAssemblyTypes(typeof(CreateOrderCommandHandler).GetTypeInfo().Assembly)
-            //    .AsClosedTypesOf(typeof(IIntegrationEventHandler<>));
+            builder.RegisterType<DapperCurrencyRepository>()
+                .As<ICurrencyRepository>()
+                .InstancePerLifetimeScope();
 
         }
     }

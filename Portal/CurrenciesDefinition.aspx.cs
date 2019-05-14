@@ -25,12 +25,8 @@ namespace Portal
     public partial class CurrenciesDefinition : System.Web.UI.Page
     {
         int currentUserId = 1;
-
-        private static CancellationTokenSource cltToken;
-        //public IMediator Service { get; set; }
-
-        //[Import] public IMediator Service { get; set; }
-        public IMediator Service { get; set; }
+        
+        public IMediator Mediator { get; set; }
 
         #region Services
 
@@ -38,9 +34,7 @@ namespace Portal
 
         public CurrenciesDefinition()
         {
-            _currencyService = _currencyService ?? new CurrencyService(new DapperCurrencyRepository());
-
-           
+            _currencyService = _currencyService ?? new CurrencyService(new DapperCurrencyRepository());           
         }
 
         #endregion
@@ -141,28 +135,6 @@ namespace Portal
             _currencyService.AddCurrency(currencyDTO);
         }
 
-        //private async Task DefinationCurrencyCommand()
-        //{
-        //    CurrencyDTO currencyDTO = new CurrencyDTO()
-        //    {
-        //        AlphabeticCode = txtAlphabeticCode.Text,
-        //        CurrencyNumericCode = Convert.ToInt16(txtInputCurrencyNumericCode.Text),
-        //        Entity = txtEntity.Text,
-        //        CurrencyType = txtCurrencyType.Text,
-        //        ExchangeRate = txtExchangeRate.Text.ToDecimal(),
-        //        UserID = currentUserId
-        //    };
-
-        //    DefinationCurrencyCommandHandler definationCurrencyCommandHandler = new DefinationCurrencyCommandHandler(new DapperCurrencyRepository());
-        //    DefinationCurrencyCommand definationCurrencyCommand = new DefinationCurrencyCommand(currencyDTO, currentUserId);
-        //    var cltToken = new System.Threading.CancellationToken();
-        //    var isSuccess = await definationCurrencyCommandHandler.Handle(definationCurrencyCommand, cltToken);
-        //    if (isSuccess)
-        //        lblMessage.Text = "عملیات تعریف ارز با موفقیت انجام شد.";
-        //    else
-        //        lblMessage.Text = "خطایی در تعریف ارز رخ داده است.";
-        //}
-
         private async Task DefinationCurrencyCommand()
         {
             try
@@ -178,14 +150,9 @@ namespace Portal
                     UserID = currentUserId
                 };
 
-
-                //DefinationCurrencyCommandHandler definationCurrencyCommandHandler = new DefinationCurrencyCommandHandler(new DapperCurrencyRepository());
-                //DefinationCurrencyCommand definationCurrencyCommand = new DefinationCurrencyCommand(currencyDTO, currentUserId);
                 DefinationCurrencyCommand definationCurrencyCommand = new DefinationCurrencyCommand() { Currency = currencyDTO, UserID = currentUserId };
-                var cltToken = new System.Threading.CancellationToken();
-                //var isSuccess = await definationCurrencyCommandHandler.Handle(definationCurrencyCommand, cltToken);
 
-                var isSuccess = await Service.Send(definationCurrencyCommand);
+                var isSuccess = await Mediator.Send(definationCurrencyCommand);
                 if (isSuccess)
                     lblMessage.Text = "عملیات تعریف ارز با موفقیت انجام شد.";
                 else
