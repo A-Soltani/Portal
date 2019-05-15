@@ -16,12 +16,15 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
     {
         //private readonly DapperContext _context;
 
+        private readonly IMapper _mapper;
+
         public IUnitOfWork UnitOfWork => throw new NotImplementedException();
 
         public IConnectionFactory DefaultConnection { get; private set; }
 
-        public DapperCurrencyRepository()
+        public DapperCurrencyRepository(IMapper mapper)
         {
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             DefaultConnection = new DbConnectionFactory("MyConString");
         }
 
@@ -91,15 +94,14 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
 
                 // Following block is used for getting Currency map by AutoMapper
                 // First, there is a config for the mapper due to keep encapsulation in domain
-                var config = new MapperConfiguration(cfg =>
-                 {
-                     cfg.CreateMap<CurrencyDTO, Currency>()
-                      .ConstructUsing(cd => Currency.CurrencyDefinition(cd.CurrencyNumericCode, cd.Entity, cd.CurrencyType, cd.AlphabeticCode, cd.ExchangeRate, cd.UserID));
-                 });
+                //var config = new MapperConfiguration(cfg =>
+                // {
+                //     cfg.CreateMap<CurrencyDTO, Currency>()
+                //      .ConstructUsing(cd => Currency.CurrencyDefinition(cd.CurrencyNumericCode, cd.Entity, cd.CurrencyType, cd.AlphabeticCode, cd.ExchangeRate, cd.UserID));
+                // });
 
-                // Secondly there is a map between 
-                IMapper mapper = config.CreateMapper();
-                return currencyDTOList.Select(c => mapper.Map<CurrencyDTO, Currency>(c)).ToList();
+                // Secondly there is a map between                
+                return currencyDTOList.Select(c => _mapper.Map<CurrencyDTO, Currency>(c)).ToList();
             }
         }
 
@@ -129,17 +131,17 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
                 // You aren't allowed to apply Currency to output object because it's properties have private setter
                 CurrencyDTO currencyDTO = await _context.Connection.QueryFirstOrDefaultAsync<CurrencyDTO>("MMCCurrencies_Get", parameters, commandType: CommandType.StoredProcedure);
 
-                // Following block is used for getting Currency map by AutoMapper
-                // First, there is a config for the mapper due to keep encapsulation in domain
-                var config = new MapperConfiguration(cfg =>
-                {
-                    cfg.CreateMap<CurrencyDTO, Currency>()
-                    .ConstructUsing(cd => Currency.CurrencyDefinition(cd.CurrencyNumericCode, cd.Entity, cd.CurrencyType, cd.AlphabeticCode, cd.ExchangeRate, cd.UserID));
-                });
+                //// Following block is used for getting Currency map by AutoMapper
+                //// First, there is a config for the mapper due to keep encapsulation in domain
+                //var config = new MapperConfiguration(cfg =>
+                //{
+                //    cfg.CreateMap<CurrencyDTO, Currency>()
+                //    .ConstructUsing(cd => Currency.CurrencyDefinition(cd.CurrencyNumericCode, cd.Entity, cd.CurrencyType, cd.AlphabeticCode, cd.ExchangeRate, cd.UserID));
+                //});
 
-                // Secondly there is a map between 
-                IMapper mapper = config.CreateMapper();
-                return mapper.Map<CurrencyDTO, Currency>(currencyDTO);
+                //// Secondly there is a map between 
+                //IMapper mapper = config.CreateMapper();
+                return _mapper.Map<CurrencyDTO, Currency>(currencyDTO);
             }
         }
     }

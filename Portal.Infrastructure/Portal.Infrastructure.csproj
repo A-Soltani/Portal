@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutofacInfrastructureModules\RepositoryModule.cs" />
+    <Compile Include="AutoMapper\AutoMapperProfiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DapperRepositories\DapperCurrencyRepository.cs" />
     <Compile Include="Repositories\DbConnectionFactory.cs" />

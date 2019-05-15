@@ -18,14 +18,15 @@ namespace Portal
         int currentUserId = 1;
         
         public IMediator Mediator { get; set; }
+        public ICurrencyService CurrencyService { get; set; }
 
         #region Services
 
-        private readonly CurrencyService _currencyService;
+        //private readonly CurrencyService _currencyService;
 
         public CurrenciesDefinition()
         {
-            _currencyService = _currencyService ?? new CurrencyService(new DapperCurrencyRepository());           
+            //_currencyService = _currencyService ?? new CurrencyService(new DapperCurrencyRepository());           
         }
 
         #endregion
@@ -55,7 +56,7 @@ namespace Portal
 
         private void BtnDelete_ServerClick(object sender, EventArgs e)
         {
-            _currencyService.DeleteCurrencyByNumericCode(Convert.ToInt16(txtInputCurrencyNumericCode.Text), 1);
+            CurrencyService.DeleteCurrencyByNumericCode(Convert.ToInt16(txtInputCurrencyNumericCode.Text), 1);
         }
 
         private void BtnUpdate_ServerClick(object sender, EventArgs e)
@@ -72,7 +73,7 @@ namespace Portal
                     ExchangeRate = txtExchangeRate.Text.ToDecimal(),
                     UserID = currentUserId
                 };
-                _currencyService.UpdateCurrency(currencyDTO);
+                CurrencyService.UpdateCurrency(currencyDTO);
             }
             catch (Exception ex)
             {
@@ -84,7 +85,7 @@ namespace Portal
         {
             try
             {
-                var currency = await _currencyService.GetCurrencyAsync(Convert.ToInt16(txtInputCurrencyNumericCode.Text));
+                var currency = await CurrencyService.GetCurrencyAsync(Convert.ToInt16(txtInputCurrencyNumericCode.Text));
                 txtInputCurrencyNumericCode.Text = currency.FirstOrDefault().CurrencyNumericCode.ToString();
                 txtEntity.Text = currency.FirstOrDefault().Entity.ToString();
                 txtCurrencyType.Text = currency.FirstOrDefault().CurrencyType.ToString();
@@ -110,21 +111,7 @@ namespace Portal
                 throw ex;
             }
 
-        }
-
-        private void AddCurrency()
-        {
-            CurrencyDTO currencyDTO = new CurrencyDTO()
-            {
-                AlphabeticCode = txtAlphabeticCode.Text,
-                CurrencyNumericCode = Convert.ToInt16(txtInputCurrencyNumericCode.Text),
-                Entity = txtEntity.Text,
-                CurrencyType = txtCurrencyType.Text,
-                ExchangeRate = txtExchangeRate.Text.ToDecimal(),
-                UserID = currentUserId
-            };
-            _currencyService.AddCurrency(currencyDTO);
-        }
+        }       
 
         private async Task DefinationCurrencyCommand()
         {
@@ -138,7 +125,6 @@ namespace Portal
                     Entity = txtEntity.Text,
                     CurrencyType = txtCurrencyType.Text,
                     ExchangeRate = txtExchangeRate.Text.ToDecimal(),
-                    UserID = currentUserId
                 };
 
                 DefinationCurrencyCommand definationCurrencyCommand = new DefinationCurrencyCommand() { Currency = currencyDTO, UserID = currentUserId };

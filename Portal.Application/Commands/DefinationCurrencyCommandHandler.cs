@@ -32,7 +32,7 @@ namespace Portal.Application.Commands
                 message.Currency.CurrencyType,
                 message.Currency.AlphabeticCode,
                 message.Currency.ExchangeRate,
-                message.Currency.UserID);
+                message.UserID);
 
             await _currencyRepository.Add(currency);
 

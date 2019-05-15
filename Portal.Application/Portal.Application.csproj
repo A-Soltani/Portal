@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutofacApplicationModules\MediatorModule.cs" />
+    <Compile Include="AutofacApplicationModules\ServicesModule.cs" />
     <Compile Include="Commands\DefinationCurrencyCommand.cs" />
     <Compile Include="Commands\DefinationCurrencyCommandHandler.cs" />
     <Compile Include="ModelDTOs\CurrencyDTO.cs" />

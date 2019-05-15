@@ -12,9 +12,9 @@ namespace Portal.Application.Services
     {
         private readonly ICurrencyRepository _currencyRepository;
 
-        public CurrencyService(ICurrencyRepository currencyRepository)
+        public CurrencyService()
         {
-            _currencyRepository = currencyRepository ?? throw new ArgumentNullException(nameof(currencyRepository));
+            //_currencyRepository = currencyRepository ?? throw new ArgumentNullException(nameof(currencyRepository));
         }
 
         public bool AddCurrency(CurrencyDTO currencyDTO)

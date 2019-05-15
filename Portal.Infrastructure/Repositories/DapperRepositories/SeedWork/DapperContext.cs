@@ -10,8 +10,7 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories.SeedWork
     {
         private IConnectionFactory _connectionFactory;
         private readonly IDbConnection _connection;
-        private readonly ReaderWriterLockSlim _rwLock = new ReaderWriterLockSlim();
-        
+        private readonly ReaderWriterLockSlim _rwLock = new ReaderWriterLockSlim();        
 
         public IDbConnection Connection => _connection;
 

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using AutoMapper;
 using Portal.Domain.AggregatesModel.CurrencyAggregate;
 using Portal.Infrastructure.Repositories.DapperRepositories;
 
@@ -22,6 +23,18 @@ namespace Portal.Infrastructure.AutofacInfrastructureModules
                 .As<ICurrencyRepository>()
                 .InstancePerLifetimeScope();
 
+            //builder.RegisterType<Mapper>()
+            //               .As<IMapper>()
+            //               .InstancePerLifetimeScope();
+
+            //        builder.Register(
+            //            ctx =>
+            //            {
+            //                var scope = ctx.Resolve<ILifetimeScope>();
+            //                    return new Mapper(ctx.Resolve<IConfigurationProvider>(),scope.Resolve);
+            //            })
+            //            .As<IMapper>()
+            //            .InstancePerLifetimeScope();
         }
     }
 }
