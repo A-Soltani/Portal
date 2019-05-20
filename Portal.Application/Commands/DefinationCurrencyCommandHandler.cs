@@ -23,10 +23,11 @@ namespace Portal.Application.Commands
         //    _currencyRepository = currencyRepository ?? throw new ArgumentNullException(nameof(currencyRepository));
         //}
 
-        public DefinationCurrencyCommandHandler(IMediator mediator, ICurrencyRepository currencyRepository)
+        public DefinationCurrencyCommandHandler(IMediator mediator, ICurrencyRepository currencyRepository, IMapper mapper)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _currencyRepository = currencyRepository ?? throw new ArgumentNullException(nameof(currencyRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         // MediatR commands

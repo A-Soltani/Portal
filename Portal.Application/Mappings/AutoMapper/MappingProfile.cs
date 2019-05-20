@@ -9,7 +9,7 @@ namespace Portal.Application.Mappings.AutoMapper
 
         public MappingProfile()
         {
-            CreateMap<Currency, CurrencyDTO>();
+            //CreateMap<Currency, CurrencyDTO>();
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿
+using AutoMapper;
 using MediatR;
 using Portal.Application.Commands;
 using Portal.Application.ModelDTOs;
@@ -18,6 +19,10 @@ namespace Portal
         int currentUserId = 1;
         
         public IMediator Mediator { get; set; }
+
+        public IMapper Mapper { get; set; }
+        public Domain.AggregatesModel.CurrencyAggregate.ICurrencyRepository MyProperty { get; set; }
+        
         //public ICurrencyService CurrencyService { get; set; }
 
         #region Services
