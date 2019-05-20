@@ -47,11 +47,6 @@ namespace Portal
         }
         protected void Page_Load(object sender, EventArgs e)
         {          
-
-            Test test = new Test() { MyProperty = 123 };
-            Test1 test1 = new Test1();
-            Mapper.Map(test,test1);
-
         }
 
         private void BtnGet_ServerClick(object sender, EventArgs e)
@@ -137,11 +132,7 @@ namespace Portal
                     Entity = txtEntity.Text,
                     CurrencyType = txtCurrencyType.Text,
                     ExchangeRate = txtExchangeRate.Text.ToDecimal(),
-                };
-
-                List<CurrencyDTO> currencyDTOList = new List<CurrencyDTO>();
-                currencyDTOList.Add(currencyDTO);
-                var test = currencyDTOList.Select(c => Mapper.Map<CurrencyDTO, Currency>(c)).ToList();
+                };               
                 
                 DefinationCurrencyCommand definationCurrencyCommand = new DefinationCurrencyCommand() { Currency = currencyDTO, UserID = currentUserId };
 

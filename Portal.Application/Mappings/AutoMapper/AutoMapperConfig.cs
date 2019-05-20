@@ -14,7 +14,7 @@ namespace Portal.Application.Mappings.AutoMapper
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new MappingProfile());
+                cfg.AddProfile(new AutoMapperProfile());
             });
 
             Mapper = config.CreateMapper();
