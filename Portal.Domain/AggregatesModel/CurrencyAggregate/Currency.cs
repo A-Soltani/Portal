@@ -17,8 +17,8 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
         public int UserID { get; private set; } // It should be move this to repository because this property doesn't play any business role in Currency entity.
 
         // There isn't any parameter for dates?
-        public string InsertDate { get; private set; }
-        public string UpdateDate { get; private set; }
+        //public string InsertDate { get; private set; }
+        //public string UpdateDate { get; private set; }
 
         private Currency(int currencyNumericCode, string entity, string currencyType, string alphabeticCode, decimal exchangeRate, int userId)
         {

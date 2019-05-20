@@ -2,11 +2,14 @@
 using AutoMapper;
 using MediatR;
 using Portal.Application.Commands;
+using Portal.Application.Mappings.AutoMapper;
 using Portal.Application.ModelDTOs;
 using Portal.Application.Services;
+using Portal.Domain.AggregatesModel.CurrencyAggregate;
 using Portal.Infrastructure.Repositories.DapperRepositories;
 using Portal.UtilityExtensions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.UI;
@@ -21,7 +24,6 @@ namespace Portal
         public IMediator Mediator { get; set; }
 
         public IMapper Mapper { get; set; }
-        public Domain.AggregatesModel.CurrencyAggregate.ICurrencyRepository MyProperty { get; set; }
         
         //public ICurrencyService CurrencyService { get; set; }
 
@@ -44,7 +46,12 @@ namespace Portal
             btnGet.ServerClick += BtnGet_ServerClick;
         }
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {          
+
+            Test test = new Test() { MyProperty = 123 };
+            Test1 test1 = new Test1();
+            Mapper.Map(test,test1);
+
         }
 
         private void BtnGet_ServerClick(object sender, EventArgs e)
@@ -132,6 +139,10 @@ namespace Portal
                     ExchangeRate = txtExchangeRate.Text.ToDecimal(),
                 };
 
+                List<CurrencyDTO> currencyDTOList = new List<CurrencyDTO>();
+                currencyDTOList.Add(currencyDTO);
+                var test = currencyDTOList.Select(c => Mapper.Map<CurrencyDTO, Currency>(c)).ToList();
+                
                 DefinationCurrencyCommand definationCurrencyCommand = new DefinationCurrencyCommand() { Currency = currencyDTO, UserID = currentUserId };
 
                 var isSuccess = await Mediator.Send(definationCurrencyCommand);

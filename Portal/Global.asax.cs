@@ -30,29 +30,9 @@ namespace Portal
 
             builder.RegisterModule(new MediatorModule());
             builder.RegisterModule(new RepositoryModule());
+            builder.RegisterModule(new AutoMapperModule());
 
-
-
-            //builder.RegisterModule(new AutoMapperModule());
-            //builder.RegisterModule(new ServicesModule());
-
-            //register your profiles, or skip this if you don't want them in your container
-            builder.RegisterAssemblyTypes().AssignableTo(typeof(Profile));
-
-            //register your configuration as a single instance
-            builder.Register(c => new MapperConfiguration(cfg =>
-            {
-                //add your profiles (either resolve from container or however else you acquire them)
-                foreach (var profile in c.Resolve<IEnumerable<Profile>>())
-                {
-                    cfg.AddProfile(profile);
-                }
-            })).AsSelf().SingleInstance();
-
-            //register your mapper
-            builder.Register(c => c.Resolve<MapperConfiguration>().CreateMapper(c.Resolve)).As<IMapper>().InstancePerLifetimeScope();
-
-
+            //builder.RegisterModule(new ServicesModule());           
 
             _containerProvider = new ContainerProvider(builder.Build());
         }

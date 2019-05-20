@@ -101,6 +101,7 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
                 // });
 
                 // Secondly there is a map between                
+                //return currencyDTOList.Select(c => _mapper.Map<CurrencyDTO, Currency>(c)).ToList();
                 return currencyDTOList.Select(c => _mapper.Map<CurrencyDTO, Currency>(c)).ToList();
             }
         }
