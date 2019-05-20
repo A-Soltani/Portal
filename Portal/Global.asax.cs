@@ -26,9 +26,10 @@ namespace Portal
             // Build up your application container and register your dependencies.
             var builder = new ContainerBuilder();
 
+            builder.RegisterModule(new MediatorModule());
             builder.RegisterModule(new RepositoryModule());
-            builder.RegisterModule(new MediatorModule());          
-            builder.RegisterModule(new ServicesModule());
+            //builder.RegisterModule(new AutoMapperModule());
+            //builder.RegisterModule(new ServicesModule());
 
             _containerProvider = new ContainerProvider(builder.Build());
         }

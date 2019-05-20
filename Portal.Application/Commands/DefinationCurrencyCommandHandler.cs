@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Portal.Domain.AggregatesModel.CurrencyAggregate;
 using System;
 
@@ -13,8 +14,15 @@ namespace Portal.Application.Commands
     {
         private readonly IMediator _mediator;
         private readonly ICurrencyRepository _currencyRepository;
+        private readonly IMapper _mapper;
 
         // Using DI to inject infrastructure persistence Repositories
+        //public DefinationCurrencyCommandHandler(IMediator mediator, ICurrencyRepository currencyRepository, IMapper mapper)
+        //{
+        //    _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        //    _currencyRepository = currencyRepository ?? throw new ArgumentNullException(nameof(currencyRepository));
+        //}
+
         public DefinationCurrencyCommandHandler(IMediator mediator, ICurrencyRepository currencyRepository)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));

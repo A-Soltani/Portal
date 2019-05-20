@@ -18,7 +18,7 @@ namespace Portal
         int currentUserId = 1;
         
         public IMediator Mediator { get; set; }
-        public ICurrencyService CurrencyService { get; set; }
+        //public ICurrencyService CurrencyService { get; set; }
 
         #region Services
 
@@ -56,7 +56,7 @@ namespace Portal
 
         private void BtnDelete_ServerClick(object sender, EventArgs e)
         {
-            CurrencyService.DeleteCurrencyByNumericCode(Convert.ToInt16(txtInputCurrencyNumericCode.Text), 1);
+            //CurrencyService.DeleteCurrencyByNumericCode(Convert.ToInt16(txtInputCurrencyNumericCode.Text), 1);
         }
 
         private void BtnUpdate_ServerClick(object sender, EventArgs e)
@@ -73,7 +73,7 @@ namespace Portal
                     ExchangeRate = txtExchangeRate.Text.ToDecimal(),
                     UserID = currentUserId
                 };
-                CurrencyService.UpdateCurrency(currencyDTO);
+                //CurrencyService.UpdateCurrency(currencyDTO);
             }
             catch (Exception ex)
             {
@@ -85,12 +85,12 @@ namespace Portal
         {
             try
             {
-                var currency = await CurrencyService.GetCurrencyAsync(Convert.ToInt16(txtInputCurrencyNumericCode.Text));
-                txtInputCurrencyNumericCode.Text = currency.FirstOrDefault().CurrencyNumericCode.ToString();
-                txtEntity.Text = currency.FirstOrDefault().Entity.ToString();
-                txtCurrencyType.Text = currency.FirstOrDefault().CurrencyType.ToString();
-                txtAlphabeticCode.Text = currency.FirstOrDefault().AlphabeticCode.ToString();
-                txtExchangeRate.Text = currency.FirstOrDefault().ExchangeRate.ToString();
+                //var currency = await CurrencyService.GetCurrencyAsync(Convert.ToInt16(txtInputCurrencyNumericCode.Text));
+                //txtInputCurrencyNumericCode.Text = currency.FirstOrDefault().CurrencyNumericCode.ToString();
+                //txtEntity.Text = currency.FirstOrDefault().Entity.ToString();
+                //txtCurrencyType.Text = currency.FirstOrDefault().CurrencyType.ToString();
+                //txtAlphabeticCode.Text = currency.FirstOrDefault().AlphabeticCode.ToString();
+                //txtExchangeRate.Text = currency.FirstOrDefault().ExchangeRate.ToString();
             }
             catch (Exception ex)
             {

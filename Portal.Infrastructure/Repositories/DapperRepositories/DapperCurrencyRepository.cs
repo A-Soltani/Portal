@@ -22,9 +22,9 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
 
         public IConnectionFactory DefaultConnection { get; private set; }
 
-        public DapperCurrencyRepository(IMapper mapper)
+        public DapperCurrencyRepository(/*IMapper mapper*/)
         {
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            //_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             DefaultConnection = new DbConnectionFactory("MyConString");
         }
 
