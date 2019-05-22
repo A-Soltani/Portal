@@ -36,11 +36,11 @@ namespace Portal.Application.Commands
         {            
             // Validation ...
 
-            Currency currency = Currency.CurrencyDefinition(message.Currency.CurrencyNumericCode,
-                message.Currency.Entity,
-                message.Currency.CurrencyType,
-                message.Currency.AlphabeticCode,
-                message.Currency.ExchangeRate,
+            Currency currency = Currency.CurrencyDefinition(message.CurrencyDTO.CurrencyNumericCode,
+                message.CurrencyDTO.Entity,
+                message.CurrencyDTO.CurrencyType,
+                message.CurrencyDTO.AlphabeticCode,
+                message.CurrencyDTO.ExchangeRate,
                 message.UserID);
 
             await _currencyRepository.Add(currency);

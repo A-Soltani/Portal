@@ -63,6 +63,7 @@
     <Compile Include="AutofacApplicationModules\AutoMapperModule.cs" />
     <Compile Include="AutofacApplicationModules\MediatorModule.cs" />
     <Compile Include="AutofacApplicationModules\ServicesModule.cs" />
+    <Compile Include="Behaviors\ValidatorBehavior.cs" />
     <Compile Include="Commands\DefinationCurrencyCommand.cs" />
     <Compile Include="Commands\DefinationCurrencyCommandHandler.cs" />
     <Compile Include="Mappings\AutoMapper\AutoMapperConfig.cs" />
@@ -71,7 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CurrencyServices.cs" />
     <Compile Include="Services\ICurrencyService.cs" />
-    <Compile Include="Validations\CurrencyValidator.cs" />
+    <Compile Include="Validations\DefinationCurrencyCommandValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Portal.Domain\Portal.Domain.csproj">

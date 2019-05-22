@@ -6,7 +6,7 @@ namespace Portal.Application.Commands
 {
     public class DefinationCurrencyCommand : IRequest<bool>
     {
-        public CurrencyDTO Currency { get; set; }
+        public CurrencyDTO CurrencyDTO { get; set; }
         public int UserID { get; set; }     
     }
 }

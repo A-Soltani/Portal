@@ -134,7 +134,7 @@ namespace Portal
                     ExchangeRate = txtExchangeRate.Text.ToDecimal(),
                 };               
                 
-                DefinationCurrencyCommand definationCurrencyCommand = new DefinationCurrencyCommand() { Currency = currencyDTO, UserID = currentUserId };
+                DefinationCurrencyCommand definationCurrencyCommand = new DefinationCurrencyCommand() { CurrencyDTO = currencyDTO, UserID = currentUserId };
 
                 var isSuccess = await Mediator.Send(definationCurrencyCommand);
                 if (isSuccess)

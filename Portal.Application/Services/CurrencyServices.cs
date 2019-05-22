@@ -19,10 +19,10 @@ namespace Portal.Application.Services
 
         public bool AddCurrency(CurrencyDTO currencyDTO)
         {
-            CurrencyValidator currencyValidator = new CurrencyValidator();
-            var validationResult = currencyValidator.Validate(currencyDTO);
-            if (!validationResult.IsValid)
-                throw new ValidationException("Validation exception", validationResult.Errors);
+            //DefinationCurrencyCommandValidator currencyValidator = new DefinationCurrencyCommandValidator();
+            //var validationResult = currencyValidator.Validate(currencyDTO);
+            //if (!validationResult.IsValid)
+            //    throw new ValidationException("Validation exception", validationResult.Errors);
 
             Currency currency = Currency.CurrencyDefinition(currencyDTO.CurrencyNumericCode, currencyDTO.Entity, currencyDTO.CurrencyType, currencyDTO.AlphabeticCode, currencyDTO.ExchangeRate, currencyDTO.UserID);
             _currencyRepository.Add(currency);
@@ -47,10 +47,10 @@ namespace Portal.Application.Services
 
         public async void UpdateCurrency(CurrencyDTO currencyDTO)
         {
-            CurrencyValidator currencyValidator = new CurrencyValidator();
-            var validationResult = currencyValidator.Validate(currencyDTO);
-            if (validationResult.IsValid)
-            {
+            //DefinationCurrencyCommandValidator currencyValidator = new DefinationCurrencyCommandValidator();
+            //var validationResult = currencyValidator.Validate(currencyDTO);
+            //if (validationResult.IsValid)
+            //{
                 // It must be checked that corresponding currency is in database. If not then an exception must be thrown.
                 Currency currency = await this.GetCurrencyByNumericCodeAsync(currencyDTO.CurrencyNumericCode);
                 if (currency == null)
@@ -61,9 +61,9 @@ namespace Portal.Application.Services
 
                 // Update currency in database
                 _currencyRepository.Update(currency);
-            }
-            else
-                throw new ValidationException("Validation exception", validationResult.Errors);
+            //}
+            //else
+            //    throw new ValidationException("Validation exception", validationResult.Errors);
         }
     }
 }
