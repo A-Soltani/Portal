@@ -12,6 +12,7 @@ namespace Portal.Application.AutofacApplicationModules
     {
         protected override void Load(ContainerBuilder builder)
         {
+            // Register IMediator
             builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
 
             var mediatrOpenTypes = new[]
@@ -23,16 +24,10 @@ namespace Portal.Application.AutofacApplicationModules
             foreach (var mediatrOpenType in mediatrOpenTypes)
             {
                 builder
-                    .RegisterAssemblyTypes(typeof(DefinationCurrencyCommand).GetTypeInfo().Assembly)
+                    .RegisterAssemblyTypes(typeof(DefinationCurrencyCommand).GetTypeInfo().Assembly) // DefinationCurrencyCommand
                     .AsClosedTypesOf(mediatrOpenType)
                     .AsImplementedInterfaces();
             }
-
-            // Register the Command's Validators (Validators based on FluentValidation library)
-            builder
-                .RegisterAssemblyTypes(typeof(DefinationCurrencyCommandValidator).GetTypeInfo().Assembly)
-                .Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
-                .AsImplementedInterfaces();
 
             builder.Register<ServiceFactory>(ctx =>
             {
@@ -40,9 +35,14 @@ namespace Portal.Application.AutofacApplicationModules
                 return t => c.Resolve(t);
             });
 
-            // Behavior
-            builder.RegisterGeneric(typeof(ValidatorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+            // Register the Command's Validators (Validators based on FluentValidation library)
+            builder
+                .RegisterAssemblyTypes(typeof(DefinationCurrencyCommandValidator).GetTypeInfo().Assembly) // DefinationCurrencyCommandValidator
+                .Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
+                .AsImplementedInterfaces();
 
+            // Register Behaviors
+            builder.RegisterGeneric(typeof(ValidatorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
 
         }
     }

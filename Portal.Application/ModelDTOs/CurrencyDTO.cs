@@ -9,6 +9,7 @@ namespace Portal.Application.ModelDTOs
         public string AlphabeticCode { get; set; }
         public decimal ExchangeRate { get; set; }
         public int UserID { get; set; }
-
+        public string InsertDate { get; set; }
+        public string UpdateDate { get; set; }
     }
 }

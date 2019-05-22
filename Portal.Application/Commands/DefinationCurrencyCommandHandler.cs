@@ -34,13 +34,11 @@ namespace Portal.Application.Commands
         // This method handels message. It is responsible for getting inpput message and returning proper output.
         public async Task<bool> Handle(DefinationCurrencyCommand message, CancellationToken cancellationToken)
         {            
-            // Validation ...
-
-            Currency currency = Currency.CurrencyDefinition(message.CurrencyDTO.CurrencyNumericCode,
-                message.CurrencyDTO.Entity,
-                message.CurrencyDTO.CurrencyType,
-                message.CurrencyDTO.AlphabeticCode,
-                message.CurrencyDTO.ExchangeRate,
+            Currency currency = Currency.CurrencyDefinition(message.CurrencyNumericCode,
+                message.Entity,
+                message.CurrencyType,
+                message.AlphabeticCode,
+                message.ExchangeRate,
                 message.UserID);
 
             await _currencyRepository.Add(currency);

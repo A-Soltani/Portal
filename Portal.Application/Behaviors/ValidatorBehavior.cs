@@ -20,12 +20,14 @@ namespace Portal.Application.Behaviors
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
+            // Get FluentValidation errors 
             var failures = _validators
                 .Select(v => v.Validate(request))
                 .SelectMany(result => result.Errors)
                 .Where(error => error != null)
                 .ToList();
 
+            // Check for having errors
             if (failures.Any())
             {
                 throw new Exception(

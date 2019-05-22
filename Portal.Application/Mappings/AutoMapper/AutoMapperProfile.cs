@@ -11,6 +11,7 @@ namespace Portal.Application.Mappings.AutoMapper
         {
             CreateMap<CurrencyDTO, Currency>()
                       .ConstructUsing(cd => Currency.CurrencyDefinition(cd.CurrencyNumericCode, cd.Entity, cd.CurrencyType, cd.AlphabeticCode, cd.ExchangeRate, cd.UserID));
+            CreateMap<Currency, CurrencyDTO>();
         }
 
 

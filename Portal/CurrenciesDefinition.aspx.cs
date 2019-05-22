@@ -4,6 +4,7 @@ using MediatR;
 using Portal.Application.Commands;
 using Portal.Application.Mappings.AutoMapper;
 using Portal.Application.ModelDTOs;
+using Portal.Application.Queries;
 using Portal.Application.Services;
 using Portal.Domain.AggregatesModel.CurrencyAggregate;
 using Portal.Infrastructure.Repositories.DapperRepositories;
@@ -16,15 +17,15 @@ using System.Web.UI;
 
 namespace Portal
 {
-    
+
     public partial class CurrenciesDefinition : System.Web.UI.Page
     {
         int currentUserId = 1;
-        
+
         public IMediator Mediator { get; set; }
 
         public IMapper Mapper { get; set; }
-        
+
         //public ICurrencyService CurrencyService { get; set; }
 
         #region Services
@@ -46,7 +47,7 @@ namespace Portal
             btnGet.ServerClick += BtnGet_ServerClick;
         }
         protected void Page_Load(object sender, EventArgs e)
-        {          
+        {
         }
 
         private void BtnGet_ServerClick(object sender, EventArgs e)
@@ -92,12 +93,16 @@ namespace Portal
         {
             try
             {
-                //var currency = await CurrencyService.GetCurrencyAsync(Convert.ToInt16(txtInputCurrencyNumericCode.Text));
-                //txtInputCurrencyNumericCode.Text = currency.FirstOrDefault().CurrencyNumericCode.ToString();
-                //txtEntity.Text = currency.FirstOrDefault().Entity.ToString();
-                //txtCurrencyType.Text = currency.FirstOrDefault().CurrencyType.ToString();
-                //txtAlphabeticCode.Text = currency.FirstOrDefault().AlphabeticCode.ToString();
-                //txtExchangeRate.Text = currency.FirstOrDefault().ExchangeRate.ToString();
+                GetCurrencyByNumericCodeQuery getCurrencyByNumericCodeQuery = new GetCurrencyByNumericCodeQuery()
+                {
+                    NumericCode = Convert.ToInt16(txtInputCurrencyNumericCode.Text)
+                };
+                var currency = await Mediator.Send(getCurrencyByNumericCodeQuery);
+                txtInputCurrencyNumericCode.Text = currency.CurrencyNumericCode.ToString();
+                txtEntity.Text = currency.Entity.ToString();
+                txtCurrencyType.Text = currency.CurrencyType.ToString();
+                txtAlphabeticCode.Text = currency.AlphabeticCode.ToString();
+                txtExchangeRate.Text = currency.ExchangeRate.ToString();
             }
             catch (Exception ex)
             {
@@ -118,23 +123,22 @@ namespace Portal
                 throw ex;
             }
 
-        }       
+        }
 
         private async Task DefinationCurrencyCommand()
         {
             try
             {
 
-                CurrencyDTO currencyDTO = new CurrencyDTO()
+                DefinationCurrencyCommand definationCurrencyCommand = new DefinationCurrencyCommand()
                 {
                     AlphabeticCode = txtAlphabeticCode.Text,
                     CurrencyNumericCode = Convert.ToInt16(txtInputCurrencyNumericCode.Text),
                     Entity = txtEntity.Text,
                     CurrencyType = txtCurrencyType.Text,
                     ExchangeRate = txtExchangeRate.Text.ToDecimal(),
-                };               
-                
-                DefinationCurrencyCommand definationCurrencyCommand = new DefinationCurrencyCommand() { CurrencyDTO = currencyDTO, UserID = currentUserId };
+                    UserID = currentUserId
+                };
 
                 var isSuccess = await Mediator.Send(definationCurrencyCommand);
                 if (isSuccess)
