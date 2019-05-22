@@ -7,7 +7,7 @@ using Portal.Application.ModelDTOs;
 using Portal.Application.Queries;
 using Portal.Application.Services;
 using Portal.Domain.AggregatesModel.CurrencyAggregate;
-using Portal.Infrastructure.Repositories.DapperRepositories;
+
 using Portal.UtilityExtensions;
 using System;
 using System.Collections.Generic;
@@ -30,7 +30,6 @@ namespace Portal
 
         #region Services
 
-        //private readonly CurrencyService _currencyService;
 
         public CurrenciesDefinition()
         {
@@ -98,6 +97,7 @@ namespace Portal
                     NumericCode = Convert.ToInt16(txtInputCurrencyNumericCode.Text)
                 };
                 var currency = await Mediator.Send(getCurrencyByNumericCodeQuery);
+
                 txtInputCurrencyNumericCode.Text = currency.CurrencyNumericCode.ToString();
                 txtEntity.Text = currency.Entity.ToString();
                 txtCurrencyType.Text = currency.CurrencyType.ToString();

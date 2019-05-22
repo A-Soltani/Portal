@@ -22,9 +22,9 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
 
         public IConnectionFactory DefaultConnection { get; private set; }
 
-        public DapperCurrencyRepository(/*IMapper mapper*/)
+        public DapperCurrencyRepository(IMapper mapper)
         {
-            //_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             DefaultConnection = new DbConnectionFactory("MyConString");
         }
 
@@ -91,17 +91,7 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
                 // Dapper is used to execute MMCCurrencies_Get sp and CurrencyDTO is only option to do it.
                 // You aren't allowed to apply Currency to output object because it's properties have private setter
                 var currencyDTOList = await _context.Connection.QueryAsync<CurrencyDTO>("MMCCurrencies_Get", parameters, commandType: CommandType.StoredProcedure);
-
-                // Following block is used for getting Currency map by AutoMapper
-                // First, there is a config for the mapper due to keep encapsulation in domain
-                //var config = new MapperConfiguration(cfg =>
-                // {
-                //     cfg.CreateMap<CurrencyDTO, Currency>()
-                //      .ConstructUsing(cd => Currency.CurrencyDefinition(cd.CurrencyNumericCode, cd.Entity, cd.CurrencyType, cd.AlphabeticCode, cd.ExchangeRate, cd.UserID));
-                // });
-
-                // Secondly there is a map between                
-                //return currencyDTOList.Select(c => _mapper.Map<CurrencyDTO, Currency>(c)).ToList();
+                
                 return currencyDTOList.Select(c => _mapper.Map<CurrencyDTO, Currency>(c)).ToList();
             }
         }
@@ -131,17 +121,7 @@ namespace Portal.Infrastructure.Repositories.DapperRepositories
                 // Dapper is used to execute MMCCurrencies_Get sp and CurrencyDTO is only option to do it.
                 // You aren't allowed to apply Currency to output object because it's properties have private setter
                 CurrencyDTO currencyDTO = await _context.Connection.QueryFirstOrDefaultAsync<CurrencyDTO>("MMCCurrencies_Get", parameters, commandType: CommandType.StoredProcedure);
-
-                //// Following block is used for getting Currency map by AutoMapper
-                //// First, there is a config for the mapper due to keep encapsulation in domain
-                //var config = new MapperConfiguration(cfg =>
-                //{
-                //    cfg.CreateMap<CurrencyDTO, Currency>()
-                //    .ConstructUsing(cd => Currency.CurrencyDefinition(cd.CurrencyNumericCode, cd.Entity, cd.CurrencyType, cd.AlphabeticCode, cd.ExchangeRate, cd.UserID));
-                //});
-
-                //// Secondly there is a map between 
-                //IMapper mapper = config.CreateMapper();
+               
                 return _mapper.Map<CurrencyDTO, Currency>(currencyDTO);
             }
         }
