@@ -16,13 +16,7 @@ namespace Portal.Application.Commands
         private readonly ICurrencyRepository _currencyRepository;
         private readonly IMapper _mapper;
 
-        // Using DI to inject infrastructure persistence Repositories
-        //public DefinationCurrencyCommandHandler(IMediator mediator, ICurrencyRepository currencyRepository, IMapper mapper)
-        //{
-        //    _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        //    _currencyRepository = currencyRepository ?? throw new ArgumentNullException(nameof(currencyRepository));
-        //}
-
+        // Using DI to inject infrastructure persistence Repositories      
         public DefinationCurrencyCommandHandler(IMediator mediator, ICurrencyRepository currencyRepository, IMapper mapper)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
