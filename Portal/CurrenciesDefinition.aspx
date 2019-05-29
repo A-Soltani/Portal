@@ -30,10 +30,10 @@
 
                 <tr>
                     <td width="24%">
-                        <label class="checkbox" for="txtEntity">*کشور</label>
+                        <label class="checkbox" for="txtCountry">*کشور</label>
                     </td>
                     <td width="24%" class="isMandetory">
-                        <asp:TextBox ID="txtEntity" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtCountry" runat="server"></asp:TextBox>
                     </td>
                     <td width="24%">
                         <label class="checkbox" for="txtCurrencyType">*عنوان ارز</label></td>

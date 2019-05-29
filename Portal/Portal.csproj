@@ -125,6 +125,10 @@
       <Project>{5d620ad9-c807-4cb4-81ad-30976f36cbc2}</Project>
       <Name>Portal.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Portal.Infrastructure\Portal.Infrastructure.csproj">
+      <Project>{F2D0DC7C-38D9-4374-AC5B-CF81D5872049}</Project>
+      <Name>Portal.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

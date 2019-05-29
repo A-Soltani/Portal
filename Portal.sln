@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal.Domain", "Portal.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal.Application", "Portal.Application\Portal.Application.csproj", "{8EA3B4E5-E4B4-490D-BB2A-FADA6C1AC417}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal.UnitTests", "Portal.UnitTests\Portal.UnitTests.csproj", "{D934F09B-017D-4CCC-9980-86515B4FA612}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{8EA3B4E5-E4B4-490D-BB2A-FADA6C1AC417}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EA3B4E5-E4B4-490D-BB2A-FADA6C1AC417}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EA3B4E5-E4B4-490D-BB2A-FADA6C1AC417}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D934F09B-017D-4CCC-9980-86515B4FA612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D934F09B-017D-4CCC-9980-86515B4FA612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D934F09B-017D-4CCC-9980-86515B4FA612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D934F09B-017D-4CCC-9980-86515B4FA612}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

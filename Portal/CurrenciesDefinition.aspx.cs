@@ -75,7 +75,7 @@ namespace Portal
                 {
                     AlphabeticCode = txtAlphabeticCode.Text,
                     CurrencyNumericCode = Convert.ToInt16(txtInputCurrencyNumericCode.Text),
-                    Entity = txtEntity.Text,
+                    Country = txtCountry.Text,
                     CurrencyType = txtCurrencyType.Text,
                     ExchangeRate = txtExchangeRate.Text.ToDecimal(),
                     UserID = currentUserId
@@ -99,7 +99,7 @@ namespace Portal
                 var currency = await Mediator.Send(getCurrencyByNumericCodeQuery);
 
                 txtInputCurrencyNumericCode.Text = currency.CurrencyNumericCode.ToString();
-                txtEntity.Text = currency.Entity.ToString();
+                txtCountry.Text = currency.Country.ToString();
                 txtCurrencyType.Text = currency.CurrencyType.ToString();
                 txtAlphabeticCode.Text = currency.AlphabeticCode.ToString();
                 txtExchangeRate.Text = currency.ExchangeRate.ToString();
@@ -134,7 +134,7 @@ namespace Portal
                 {
                     AlphabeticCode = txtAlphabeticCode.Text,
                     CurrencyNumericCode = Convert.ToInt16(txtInputCurrencyNumericCode.Text),
-                    Entity = txtEntity.Text,
+                    Country = txtCountry.Text,
                     CurrencyType = txtCurrencyType.Text,
                     ExchangeRate = txtExchangeRate.Text.ToDecimal(),
                     UserID = currentUserId

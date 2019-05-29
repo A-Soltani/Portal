@@ -17,7 +17,7 @@ namespace Portal.Infrastructure.AutoMapper
             {
                 //Complex to Flattened
                 cfg.CreateMap<CurrencyDTO, Currency>()
-                    .ConstructUsing(cd => Currency.CurrencyDefinition(cd.CurrencyNumericCode, cd.Entity, cd.CurrencyType, cd.AlphabeticCode, cd.ExchangeRate, cd.UserID));
+                    .ConstructUsing(cd => Currency.CurrencyDefinition(cd.CurrencyNumericCode, cd.Country, cd.CurrencyType, cd.AlphabeticCode, cd.ExchangeRate, cd.UserID));
             });
 
 

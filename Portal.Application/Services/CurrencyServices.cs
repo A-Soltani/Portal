@@ -24,7 +24,7 @@ namespace Portal.Application.Services
             //if (!validationResult.IsValid)
             //    throw new ValidationException("Validation exception", validationResult.Errors);
 
-            Currency currency = Currency.CurrencyDefinition(currencyDTO.CurrencyNumericCode, currencyDTO.Entity, currencyDTO.CurrencyType, currencyDTO.AlphabeticCode, currencyDTO.ExchangeRate, currencyDTO.UserID);
+            Currency currency = Currency.CurrencyDefinition(currencyDTO.CurrencyNumericCode, currencyDTO.Country, currencyDTO.CurrencyType, currencyDTO.AlphabeticCode, currencyDTO.ExchangeRate, currencyDTO.UserID);
             _currencyRepository.Add(currency);
             return true;
 
@@ -57,7 +57,7 @@ namespace Portal.Application.Services
                     throw new Exception("There isn't any currency with " + currencyDTO.CurrencyNumericCode + " CurrencyNumericCode.");
 
                 // Update currency in domain
-                currency.UpdateCurrency(currencyDTO.Entity, currencyDTO.CurrencyType, currencyDTO.AlphabeticCode, currencyDTO.ExchangeRate, currencyDTO.UserID);
+                currency.UpdateCurrency(currencyDTO.Country, currencyDTO.CurrencyType, currencyDTO.AlphabeticCode, currencyDTO.ExchangeRate, currencyDTO.UserID);
 
                 // Update currency in database
                 _currencyRepository.Update(currency);

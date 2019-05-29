@@ -35,7 +35,7 @@ namespace Portal.Application.Commands
         public async Task<bool> Handle(DefinationCurrencyCommand message, CancellationToken cancellationToken)
         {            
             Currency currency = Currency.CurrencyDefinition(message.CurrencyNumericCode,
-                message.Entity,
+                message.Country,
                 message.CurrencyType,
                 message.AlphabeticCode,
                 message.ExchangeRate,
