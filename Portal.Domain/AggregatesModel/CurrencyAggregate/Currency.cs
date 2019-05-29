@@ -1,4 +1,5 @@
-﻿using Portal.Domain.SeedWork;
+﻿using Portal.Domain.Exceptions;
+using Portal.Domain.SeedWork;
 using System;
 
 namespace Portal.Domain.AggregatesModel.CurrencyAggregate
@@ -22,15 +23,28 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
 
         private Currency(int currencyNumericCode, string country, string currencyType, string alphabeticCode, decimal exchangeRate, int userId)
         {
-            // What is the validation of currency?
-            if (CurrencyNumericCode < 1 || ExchangeRate < 1 || string.IsNullOrWhiteSpace(this.Country) || string.IsNullOrWhiteSpace(CurrencyType) || string.IsNullOrWhiteSpace(AlphabeticCode))
-                CurrencyNumericCode = currencyNumericCode;
+            // What is the validation of currency??
+
+            if (currencyNumericCode < 1)
+                throw new PortalDomainException("currencyNumericCode must be greater than 1.");
+
+            if (string.IsNullOrWhiteSpace(country))
+                throw new PortalDomainException("currency must be filled.");
+            
+            if (string.IsNullOrWhiteSpace(currencyType))
+                throw new PortalDomainException("currencyType must be filled.");
+
+            if (string.IsNullOrWhiteSpace(alphabeticCode))
+                throw new PortalDomainException("alphabeticCode must be filled.");
+
+            if (exchangeRate < 1)
+                throw new PortalDomainException("exchangeRate must be greater than 1.");
 
             this.Country = country;
-            CurrencyType = currencyType;
-            AlphabeticCode = alphabeticCode;
-            ExchangeRate = exchangeRate;
-            UserID = userId;
+            this.CurrencyType = currencyType;
+            this.AlphabeticCode = alphabeticCode;
+            this.ExchangeRate = exchangeRate;
+            this.UserID = userId;
         }
 
         // DDD Patterns comment
@@ -45,14 +59,24 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
         public void UpdateCurrency(string country, string currencyType, string alphabeticCode, decimal exchangeRate, int userId)
         {
             // What is the validation of currency?
-            if (ExchangeRate < 1 || string.IsNullOrWhiteSpace(Country) || string.IsNullOrWhiteSpace(CurrencyType) || string.IsNullOrWhiteSpace(AlphabeticCode))
-                throw new Exception("There is an error.");
+           
+            if (string.IsNullOrWhiteSpace(country))
+                throw new PortalDomainException("currency must be filled.");
 
-            Country = country;
-            CurrencyType = currencyType;
-            AlphabeticCode = alphabeticCode;
-            ExchangeRate = exchangeRate;
-            UserID = userId;
+            if (string.IsNullOrWhiteSpace(currencyType))
+                throw new PortalDomainException("currencyType must be filled.");
+
+            if (string.IsNullOrWhiteSpace(alphabeticCode))
+                throw new PortalDomainException("alphabeticCode must be filled.");
+
+            if (exchangeRate < 1)
+                throw new PortalDomainException("exchangeRate must be greater than 1.");
+
+            this.Country = country;
+            this.CurrencyType = currencyType;
+            this.AlphabeticCode = alphabeticCode;
+            this.ExchangeRate = exchangeRate;
+            this.UserID = userId;
         }
 
     }
