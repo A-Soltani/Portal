@@ -45,8 +45,8 @@ namespace Portal.UnitTests.Application
             _currencyRepositoryMock.Setup(currencyRepo => currencyRepo.GetCurrencyByNumericCodeAsync(It.IsAny<int>()))
                    .Returns(Task.FromResult<Currency>(FakeCurrency()));
 
-            _currencyRepositoryMock.Setup(currencyRepo => currencyRepo.UnitOfWork.SaveChangesAsync(default(CancellationToken)))
-                .Returns(Task.FromResult(1));
+            //_currencyRepositoryMock.Setup(currencyRepo => currencyRepo.UnitOfWork.SaveChangesAsync(default(CancellationToken)))
+            //    .Returns(Task.FromResult(1));
 
             //Act
             var handler = new DefinationCurrencyCommandHandler(_mediatorMock.Object, _currencyRepositoryMock.Object, _mapperMock.Object);
