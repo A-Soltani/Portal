@@ -96,6 +96,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Portal.Application\Portal.Application.csproj">
+      <Project>{8EA3B4E5-E4B4-490D-BB2A-FADA6C1AC417}</Project>
+      <Name>Portal.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Portal.Domain\Portal.Domain.csproj">
       <Project>{5D620AD9-C807-4CB4-81AD-30976F36CBC2}</Project>
       <Name>Portal.Domain</Name>
