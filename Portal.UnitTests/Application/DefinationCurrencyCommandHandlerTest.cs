@@ -19,22 +19,31 @@ namespace Portal.UnitTests.Application
         private readonly Mock<ICurrencyRepository> _currencyRepositoryMock;
         private readonly Mock<IMapper> _mapperMock;
 
-        public DefinationCurrencyCommandHandlerTest(Mock<IMediator> mediatorMock, Mock<ICurrencyRepository> currencyRepositoryMock, Mock<IMapper> mapperMock)
+        public DefinationCurrencyCommandHandlerTest()
         {
-            _mediatorMock = mediatorMock;
-            _currencyRepositoryMock = currencyRepositoryMock;
-            _mapperMock = mapperMock;
+            _mediatorMock = new Mock<IMediator>();
+            _currencyRepositoryMock = new Mock<ICurrencyRepository>();
+            _mapperMock = new Mock<IMapper>();
         }
 
-
         [Fact]
-        public async Task Handle_return_false_if_order_is_not_persisted()
+        public async Task Handle_return_true_if_currency_is_persisted()
         {
+            //Arrange
             var fakeOrderCmd = FakeDefinationCurrencyCommand(new Dictionary<string, object>
-            { ["currencyNumericCode"] = 1 });
+            {
+                ["currencyNumericCode"] = 1,
+                ["country"] = "FakeCountrytName",
+                ["alphabeticCode"] = "FakeAlphabeticCode",
+                ["currencyType"] = "FakeCurrencyType",
+                ["exchangeRate"] = 1.1,
+                ["insertDate"] = "FakeInsertDate",
+                ["updateDate"] = "FakeUpdateDate",
+                ["userID"] = 1,
+            });
 
             _currencyRepositoryMock.Setup(currencyRepo => currencyRepo.GetCurrencyByNumericCodeAsync(It.IsAny<int>()))
-               .Returns(Task.FromResult<Currency>(FakeCurrency()));
+                   .Returns(Task.FromResult<Currency>(FakeCurrency()));
 
             _currencyRepositoryMock.Setup(currencyRepo => currencyRepo.UnitOfWork.SaveChangesAsync(default(CancellationToken)))
                 .Returns(Task.FromResult(1));
@@ -45,7 +54,7 @@ namespace Portal.UnitTests.Application
             var result = await handler.Handle(fakeOrderCmd, cltToken);
 
             //Assert
-            Assert.False(result);
+            Assert.True(result);
         }
 
         private Currency FakeCurrency()
@@ -59,9 +68,9 @@ namespace Portal.UnitTests.Application
             {
                 AlphabeticCode = (args != null && args.ContainsKey("alphabeticCode")) ? (string)args["alphabeticCode"] : null,
                 Country = (args != null && args.ContainsKey("country")) ? (string)args["country"] : null,
-                CurrencyNumericCode = (args != null && args.ContainsKey("currencyNumericCode")) ? (int)args["CurrencyNumericCode"] : 0,
+                CurrencyNumericCode = (args != null && args.ContainsKey("currencyNumericCode")) ? (int)args["currencyNumericCode"] : 0,
                 CurrencyType = (args != null && args.ContainsKey("currencyType")) ? (string)args["currencyType"] : null,
-                ExchangeRate = (args != null && args.ContainsKey("exchangeRate")) ? (decimal)args["exchangeRate"] : 0,
+                ExchangeRate = (args != null && args.ContainsKey("exchangeRate")) ? Convert.ToDecimal(args["exchangeRate"]) : -1,
                 InsertDate = args != null && args.ContainsKey("insertDate") ? (string)args["insertDate"] : null,
                 UpdateDate = args != null && args.ContainsKey("updateDate") ? (string)args["updateDate"] : null,
                 UserID = (args != null && args.ContainsKey("userID")) ? (int)args["userID"] : 0,

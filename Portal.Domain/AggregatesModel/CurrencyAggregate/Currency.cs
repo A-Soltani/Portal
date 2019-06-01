@@ -69,7 +69,7 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
             if (string.IsNullOrWhiteSpace(alphabeticCode))
                 throw new PortalDomainException("alphabeticCode must be filled.");
 
-            if (exchangeRate < 1)
+            if (exchangeRate < 0)
                 throw new PortalDomainException("exchangeRate must be greater than 1.");
 
             this.Country = country;

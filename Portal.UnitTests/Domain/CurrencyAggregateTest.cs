@@ -29,7 +29,7 @@ namespace Portal.UnitTests.Domain
         [InlineData("FakeCountrytName", "NewFakeCurrencyType", "NewFakeAlphabeticCode", 10, 10)]
         [InlineData("FakeCountrytName", "FakeCurrencyType", "NewFakeAlphabeticCode", 10, 10)]
         [InlineData("FakeCountrytName", "FakeCurrencyType", "FakeAlphabeticCode", 10, 10)]
-        [InlineData("FakeCountrytName", "FakeCurrencyType", "FakeAlphabeticCode", 1, 10)]
+        [InlineData("FakeCountrytName", "FakeCurrencyType", "FakeAlphabeticCode", 1.1, 10)]
         public void UpdateCurrency_Invalid_Arguments(string country, string currencyType, string alphabeticCode, decimal exchangeRate, int userId)
         {
             //Arrange
