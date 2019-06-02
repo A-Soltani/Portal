@@ -15,6 +15,7 @@ namespace Portal.UnitTests.Application
 {
     public class DefinationCurrencyCommandHandlerTest
     {
+        // Moq framework has been applyed to test
         private readonly Mock<IMediator> _mediatorMock;
         private readonly Mock<ICurrencyRepository> _currencyRepositoryMock;
         private readonly Mock<IMapper> _mapperMock;
@@ -29,31 +30,32 @@ namespace Portal.UnitTests.Application
         [Fact]
         public async Task Handle_return_true_if_currency_is_persisted()
         {
-            //Arrange
+            // Arrange
+            // Arrange by doing any necessary setup
             var fakeOrderCmd = FakeDefinationCurrencyCommand(new Dictionary<string, object>
             {
                 ["currencyNumericCode"] = 1,
                 ["country"] = "FakeCountrytName",
                 ["alphabeticCode"] = "FakeAlphabeticCode",
                 ["currencyType"] = "FakeCurrencyType",
-                ["exchangeRate"] = 1.1,
+                ["exchangeRate"] = 1,
                 ["insertDate"] = "FakeInsertDate",
                 ["updateDate"] = "FakeUpdateDate",
                 ["userID"] = 1,
-            });
+            });          
 
-            _currencyRepositoryMock.Setup(currencyRepo => currencyRepo.GetCurrencyByNumericCodeAsync(It.IsAny<int>()))
-                   .Returns(Task.FromResult<Currency>(FakeCurrency()));
+            // setup a mock currency repo to return some fake data in our target method (Add method)
+            _currencyRepositoryMock.Setup(mockCurrencyRepo => mockCurrencyRepo.Add(FakeCurrency()))
+                  .Returns(Task.FromResult<Currency>(FakeCurrency()));
 
-            //_currencyRepositoryMock.Setup(currencyRepo => currencyRepo.UnitOfWork.SaveChangesAsync(default(CancellationToken)))
-            //    .Returns(Task.FromResult(1));
-
-            //Act
+            // Act
+            // Act by executing the test - ie. calling the actual method/function and grab its result.
             var handler = new DefinationCurrencyCommandHandler(_mediatorMock.Object, _currencyRepositoryMock.Object, _mapperMock.Object);
             var cltToken = new System.Threading.CancellationToken();
             var result = await handler.Handle(fakeOrderCmd, cltToken);
 
-            //Assert
+            // Assert
+            // Assert by verifying the returned result matches expected results.
             Assert.True(result);
         }
 

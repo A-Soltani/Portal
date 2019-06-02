@@ -37,6 +37,9 @@ namespace Portal.Application.Commands
 
             await _currencyRepository.Add(currency);
 
+            // This is an inappropriate way to return true in every situation, 
+            // but as far as I can see, there isn't any information to be awared if the currency object has been stored correctly or not.
+            // So return true should be superseded by a propper value
             return true;
         }
 
