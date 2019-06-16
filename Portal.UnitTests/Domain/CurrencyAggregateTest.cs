@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using FluentAssertions;
 
 namespace Portal.UnitTests.Domain
 {
@@ -40,12 +41,22 @@ namespace Portal.UnitTests.Domain
             //Act
             currency.UpdateCurrency(country, currencyType, alphabeticCode, exchangeRate, userId);
 
-            //Assert
-            Assert.Equal(currency.Country, currencyResultOfUpdating.Country);
-            Assert.Equal(currency.CurrencyType, currencyResultOfUpdating.CurrencyType);
-            Assert.Equal(currency.AlphabeticCode, currencyResultOfUpdating.AlphabeticCode);
-            Assert.Equal(currency.ExchangeRate, currencyResultOfUpdating.ExchangeRate);
-            Assert.Equal(currency.UserID, currencyResultOfUpdating.UserID);
+            // Assert by FluentAssertions. Without this package we must check equality of every properties.
+            currency.Should().BeEquivalentTo(currencyResultOfUpdating);
+        }
+
+        [Theory]
+        [InlineData("", "NewFakeCurrencyType", "NewFakeAlphabeticCode", 10, 10)]
+        [InlineData("NewFakeCountrytName", "", "NewFakeAlphabeticCode", 10, 10)]
+        [InlineData("NewFakeCountrytName", "NewFakeCurrencyType", "", 10, 10)]
+        [InlineData("NewFakeCountrytName", "NewFakeCurrencyType", "NewFakeAlphabeticCode", -1, 10)]
+        public void UpdateCurrency_valid_Arguments(string country, string currencyType, string alphabeticCode, decimal exchangeRate, int userId)
+        {
+            //Arrange
+            var currency = Currency.CurrencyDefinition(1, "FakeCountrytName", "FakeCurrencyType", "FakeAlphabeticCode", 1, 1);
+
+            //Act - Assert
+            Assert.Throws<PortalDomainException>(() => currency.UpdateCurrency(country, currencyType, alphabeticCode, exchangeRate, userId));
         }
 
 

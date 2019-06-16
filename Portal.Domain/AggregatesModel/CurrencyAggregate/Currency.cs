@@ -38,7 +38,7 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
                 throw new PortalDomainException("alphabeticCode must be filled.");
 
             if (exchangeRate < 1)
-                throw new PortalDomainException("exchangeRate must be greater than 1.");
+                throw new PortalDomainException("exchangeRate must be greater than 0.");
 
             this.Country = country;
             this.CurrencyType = currencyType;
@@ -70,7 +70,7 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
                 throw new PortalDomainException("alphabeticCode must be filled.");
 
             if (exchangeRate < 0)
-                throw new PortalDomainException("exchangeRate must be greater than 1.");
+                throw new PortalDomainException("exchangeRate must be greater than 0.");
 
             this.Country = country;
             this.CurrencyType = currencyType;

@@ -9,7 +9,7 @@ namespace Portal.Application.Mappings.AutoMapper
 {
     public class AutoMapperConfig
     {
-        public static IMapper Mapper;
+        public static IMapper _mapper;
         public static void ConfigureAutoMapper()
         {
             var config = new MapperConfiguration(cfg =>
@@ -17,7 +17,7 @@ namespace Portal.Application.Mappings.AutoMapper
                 cfg.AddProfile(new AutoMapperProfile());
             });
 
-            Mapper = config.CreateMapper();
+            _mapper = config.CreateMapper();
             config.AssertConfigurationIsValid();
         }
     }
