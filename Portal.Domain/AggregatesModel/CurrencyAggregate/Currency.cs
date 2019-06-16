@@ -28,23 +28,46 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
             if (currencyNumericCode < 1)
                 throw new PortalDomainException("currencyNumericCode must be greater than 1.");
 
-            if (string.IsNullOrWhiteSpace(country))
-                throw new PortalDomainException("currency must be filled.");
-            
-            if (string.IsNullOrWhiteSpace(currencyType))
-                throw new PortalDomainException("currencyType must be filled.");
+            this.SetMutableFields(country, currencyType, alphabeticCode, exchangeRate, userId);          
+          
+        }
 
-            if (string.IsNullOrWhiteSpace(alphabeticCode))
-                throw new PortalDomainException("alphabeticCode must be filled.");
+        // ToDo Avoid types with poor cohesion
+        private void SetMutableFields(string country, string currencyType, string alphabeticCode, decimal exchangeRate, int userId)
+        {
+            SetCountry(country);
+            SetCurrencyType(currencyType);
+            SetAlphabeticCode(alphabeticCode);
+            SetExchangeRate(exchangeRate);
+            this.UserID = userId;
+        }
 
+        private void SetExchangeRate(decimal exchangeRate)
+        {
             if (exchangeRate < 1)
                 throw new PortalDomainException("exchangeRate must be greater than 0.");
-
-            this.Country = country;
-            this.CurrencyType = currencyType;
-            this.AlphabeticCode = alphabeticCode;
             this.ExchangeRate = exchangeRate;
-            this.UserID = userId;
+        }
+
+        private void SetAlphabeticCode(string alphabeticCode)
+        {
+            if (string.IsNullOrWhiteSpace(alphabeticCode))
+                throw new PortalDomainException("alphabeticCode must be filled.");
+            this.AlphabeticCode = alphabeticCode;
+        }
+
+        private void SetCurrencyType(string currencyType)
+        {
+            if (string.IsNullOrWhiteSpace(currencyType))
+                throw new PortalDomainException("currencyType must be filled.");
+            this.CurrencyType = currencyType;
+        }
+
+        private void SetCountry(string country)
+        {
+            if (string.IsNullOrWhiteSpace(country))
+                throw new PortalDomainException("currency must be filled.");
+            this.Country = country;
         }
 
         // DDD Patterns comment
@@ -59,24 +82,9 @@ namespace Portal.Domain.AggregatesModel.CurrencyAggregate
         public void UpdateCurrency(string country, string currencyType, string alphabeticCode, decimal exchangeRate, int userId)
         {
             // What is the validation of currency?
+
+            this.SetMutableFields(country, currencyType, alphabeticCode, exchangeRate, userId);
            
-            if (string.IsNullOrWhiteSpace(country))
-                throw new PortalDomainException("currency must be filled.");
-
-            if (string.IsNullOrWhiteSpace(currencyType))
-                throw new PortalDomainException("currencyType must be filled.");
-
-            if (string.IsNullOrWhiteSpace(alphabeticCode))
-                throw new PortalDomainException("alphabeticCode must be filled.");
-
-            if (exchangeRate < 0)
-                throw new PortalDomainException("exchangeRate must be greater than 0.");
-
-            this.Country = country;
-            this.CurrencyType = currencyType;
-            this.AlphabeticCode = alphabeticCode;
-            this.ExchangeRate = exchangeRate;
-            this.UserID = userId;
         }
 
     }
